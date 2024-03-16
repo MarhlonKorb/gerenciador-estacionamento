@@ -21,7 +21,7 @@ public class Veiculo extends EntidadeComId {
     private Proprietario proprietario;
 
     @JsonBackReference
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_vaga")
     private Vaga vaga;
 
