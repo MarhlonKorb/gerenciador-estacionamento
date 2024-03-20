@@ -14,6 +14,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.v
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 /**
@@ -38,8 +39,14 @@ public class UsuarioService extends AbstractEntityService<Usuario, Long, Usuario
     public Usuario create(Usuario usuario) {
         iUsuarioValidador.validar(usuario);
         String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.getPassword());
+        criptografarPassword(usuario);
         usuario.setStatus(Status.A);
-        return  usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
+    }
+
+    private void criptografarPassword(Usuario usuario) {
+        String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.getPassword());
+        usuario.setPassword(encryptedPassword);
     }
 
     public Usuario findById(Usuario usuario) {
