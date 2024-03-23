@@ -20,12 +20,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class VagaService extends AbstractEntityService<Vaga, Long, VagaInputMapper, VagaOutputMapper> {
-
-    private final VagaMapper vagaMapper;
     private final VagaRepository vagaRepository;
 
-    public VagaService(VagaMapper vagaMapper, VagaRepository vagaRepository) {
-        this.vagaMapper = vagaMapper;
+    public VagaService(VagaRepository vagaRepository) {
         this.vagaRepository = vagaRepository;
     }
 
