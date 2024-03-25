@@ -22,9 +22,11 @@ class VagaServiceTest {
 
     @Test
     void deveRetornarVagaQuandoExistirVagaPeloIdInformado() {
+        // Cria uma vaga
         Vaga vagaEsperada = new Vaga();
         vagaEsperada.setId(1L);
         Mockito.when(vagaRepository.findById(1L)).thenReturn(Optional.of(vagaEsperada));
+        // Executa o método a ser testado
         Vaga vagaEncontrada = vagaService.getVagaById(1L);
         Assertions.assertEquals(vagaEsperada, vagaEncontrada);
     }

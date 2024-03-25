@@ -26,7 +26,7 @@ public class UsuarioValidadorImpl implements IUsuarioValidador {
 
     @Override
     public void contemPassword(String password) throws UsuarioException {
-        if(password.isEmpty()){
+        if(password == null || password.isEmpty()){
             throw new UsuarioException("Senha não pode ser vazia.");
         }
     }

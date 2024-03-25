@@ -49,12 +49,15 @@ public class UsuarioService extends AbstractEntityService<Usuario, Long, Usuario
         usuario.setPassword(encryptedPassword);
     }
 
-    public Usuario findById(Usuario usuario) {
-        final Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(usuario.getId());
+    public Usuario findById(Long id) {
+        final Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
         if (usuarioEncontrado.isEmpty()) {
             throw new UsuarioException("Usuário não encontrado.");
         }
         return usuarioEncontrado.get();
     }
 
+    public Usuario findByEmail(String email){
+        return usuarioRepository.findUsuarioByEmail(email);
+    }
 }
