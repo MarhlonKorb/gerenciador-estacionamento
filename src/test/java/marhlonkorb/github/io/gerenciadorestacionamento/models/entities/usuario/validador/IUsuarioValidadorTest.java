@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @ExtendWith(MockitoExtension.class)
 class IUsuarioValidadorTest {
-
+    final String EMAIL = "teste@teste.com.br";
     @Mock
     private UsuarioRepository usuarioRepository;
 
@@ -38,24 +38,43 @@ class IUsuarioValidadorTest {
     }
 
     @Test
-    void deveLancarExceptionQuandoPasswordForVazio() {
-        Assert.assertThrows(UsuarioException.class, ( ) -> iUsuarioValidador.contemPassword(""));
-    }
-
-    @Test
     void deveLancarExceptionQuandoPasswordForNulo() {
         Assert.assertThrows(UsuarioException.class, ( ) -> iUsuarioValidador.contemPassword(null));
     }
 
     @Test
-    void deveLancarExceptionQuandoUsuarioJaEstiverCadastrado() {
-        Mockito.when(usuarioRepository.findByEmail("teste@teste.com.br")).thenReturn(null);
-        Assert.assertThrows(UsuarioException.class, ( ) -> iUsuarioValidador.validaIsUsuarioInexistente("teste@teste.com.br"));
+    void deveLancarExceptionQuandoPasswordForVazio() {
+        Assert.assertThrows(UsuarioException.class, ( ) -> iUsuarioValidador.contemPassword(""));
     }
+
     @Test
-    void naoDeveLancarExceptionQuandoUsuarioNaoEstiverCadastrado() {
+    void deveLancarExceptionQuandoUsuarioJaEstiverCadastrado() {
         Usuario usuario = new UsuarioBuilder().setEmail("teste@teste.com.br").build();
         Mockito.when(usuarioRepository.findByEmail("teste@teste.com.br")).thenReturn(usuario);
+        Assert.assertThrows(UsuarioException.class, ( ) -> iUsuarioValidador.validaIsUsuarioExistente(EMAIL));
+    }
+
+    @Test
+    void naoDeveLancarExceptionQuandoUsuarioNaoEstiverCadastrado() {
+        assertDoesNotThrow(() -> iUsuarioValidador.validaIsUsuarioExistente(EMAIL));
+    }
+
+    @Test
+    void deveLancarExceptionQuandoUsuarioNaoEstiverCadastrado() {
+        Mockito.when(usuarioRepository.findByEmail(EMAIL)).thenReturn(null);
+        Assert.assertThrows(UsuarioException.class, ( ) -> iUsuarioValidador.validaIsUsuarioInexistente(EMAIL));
+    }
+    @Test
+    void naoDeveLancarExceptionQuandoUsuarioJaEstiverCadastrado() {
+        Usuario usuario = new UsuarioBuilder().setEmail(EMAIL).build();
+        Mockito.when(usuarioRepository.findByEmail(EMAIL)).thenReturn(usuario);
         assertDoesNotThrow(() -> iUsuarioValidador.validaIsUsuarioInexistente(usuario.getEmail()));
+    }
+
+    @Test
+    void naoDeveLancarExceptionQuandoForExecutadoOMetodoValidar() {
+        Usuario usuario = new UsuarioBuilder().setEmail(EMAIL).setPassword("teste").build();
+        Mockito.when(usuarioRepository.findByEmail("teste@teste.com.br")).thenReturn(null);
+        assertDoesNotThrow(() -> iUsuarioValidador.validar(usuario));
     }
 }
