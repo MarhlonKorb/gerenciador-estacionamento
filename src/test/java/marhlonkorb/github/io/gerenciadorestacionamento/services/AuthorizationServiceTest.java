@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class AuthorizationServiceTest {
 
     @InjectMocks
-    AuthorizationService authorizationService = new AuthorizationService();
+    AuthorizationService authorizationService;
     @Mock
     private UsuarioRepository usuarioRepository;
 

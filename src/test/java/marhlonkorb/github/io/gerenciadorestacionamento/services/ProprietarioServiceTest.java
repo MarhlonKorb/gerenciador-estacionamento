@@ -4,7 +4,6 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprieta
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.ProprietarioRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -33,12 +33,6 @@ class UsuarioServiceTest {
     @InjectMocks
     private UsuarioService usuarioService;
 
-    @BeforeEach
-    void setUp() {
-        IEmailValidador iEmailValidador = new EmailValidador();
-        iUsuarioValidador = new UsuarioValidadorImpl(usuarioRepository, iEmailValidador);
-    }
-
     @Test
     void deveCriarUsuarioAtivoQuandoExecutarMetodoCreate(){
         Usuario usuario = new UsuarioBuilder().setEmail("teste@teste.com").setPassword("teste").build();
