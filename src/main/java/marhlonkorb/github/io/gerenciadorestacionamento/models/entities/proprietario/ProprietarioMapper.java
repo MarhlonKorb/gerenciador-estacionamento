@@ -14,7 +14,7 @@ public class ProprietarioMapper extends AbstractEntityMapper<Proprietario, Propr
 
     @Override
     public ProprietarioOutputMapper convertToDto(Proprietario input) {
-        return modelMapper.map(input, ProprietarioOutputMapper.class);
+         return modelMapper.map(input, ProprietarioOutputMapper.class);
     }
 
     @Override
