@@ -44,6 +44,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -114,6 +115,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
@@ -130,11 +136,11 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>8.5.13</version>
                 <configuration>
-                <user>postgres</user>
-                <password>master</password>
-                <schemas>
-                    <schema>gerenciador_estacionamento</schema>
-                </schemas>
+                    <user>postgres</user>
+                    <password>master</password>
+                    <schemas>
+                        <schema>gerenciador_estacionamento</schema>
+                    </schemas>
                 </configuration>
             </plugin>
             <plugin>
@@ -143,14 +149,16 @@
                 <version>2.0.1.RELEASE</version>
             </plugin>
             <plugin>
-<!--                   Configuração para gerar o JAR &ndash;&gt;-->
+                <!--                   Configuração para gerar o JAR &ndash;&gt;-->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>marhlonkorb.github.io.gerenciadorestacionamento.GerenciadorEstacionamentoApplication</mainClass>
+                            <mainClass>
+                                marhlonkorb.github.io.gerenciadorestacionamento.GerenciadorEstacionamentoApplication
+                            </mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -14,7 +14,6 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.v
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 /**

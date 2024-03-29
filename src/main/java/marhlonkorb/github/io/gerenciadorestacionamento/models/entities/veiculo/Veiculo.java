@@ -39,6 +39,15 @@ public class Veiculo extends EntidadeComId {
     @Column()
     private boolean principal;
 
+    public Veiculo() {
+    }
+
+    public Veiculo(String placa, String marca, String modelo) {
+        this.placa = placa;
+        this.marca = marca;
+        this.modelo = modelo;
+    }
+
     public Proprietario getProprietario() {
         return proprietario;
     }
@@ -99,8 +108,8 @@ public class Veiculo extends EntidadeComId {
         return this.getVaga() != null;
     }
 
-    public void adicionarVaga(Vaga vaga){
-            vaga.setStatusVaga(StatusVaga.O);
-            this.vaga = vaga;
+    public void adicionarVaga(Vaga vaga) {
+        vaga.setStatusVaga(StatusVaga.O);
+        this.vaga = vaga;
     }
 }

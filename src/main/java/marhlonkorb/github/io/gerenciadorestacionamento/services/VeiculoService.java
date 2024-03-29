@@ -11,8 +11,6 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.V
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoOutputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.exceptions.VeiculoNotFoundException;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VeiculoRepository;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,12 +25,10 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
     private final VeiculoRepository veiculoRepository;
 
     private final VeiculoMapper veiculoMapper;
-    private final ModelMapper modelMapper;
 
-    public VeiculoService(VeiculoRepository veiculoRepository, VeiculoMapper veiculoMapper, ModelMapper modelMapper) {
+    public VeiculoService(VeiculoRepository veiculoRepository, VeiculoMapper veiculoMapper) {
         this.veiculoRepository = veiculoRepository;
         this.veiculoMapper = veiculoMapper;
-        this.modelMapper = modelMapper;
     }
 
     /**
@@ -41,7 +37,7 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
      * @param idVeiculo
      * @return Veiculo
      */
-    public Veiculo getVeiculoById(Long idVeiculo) {
+    public Veiculo findById(Long idVeiculo) {
         return veiculoRepository.findById(idVeiculo)
                 .orElseThrow(() -> new VeiculoNotFoundException("Veículo não encontrado."));
     }
@@ -57,8 +53,7 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
         final Set<Veiculo> veiculosProprietario = veiculoRepository.findAllByProprietarioId(idProprietario);
         // Realiza o mapeamento dos veículos para objetos do tipo VeiculoOutputMapper usando o ModelMapper
         // O uso de TypeToken ajuda a lidar com a natureza genérica da coleção Set<VeiculoOutputMapper>
-        return modelMapper.map(veiculosProprietario, new TypeToken<Set<VeiculoOutputMapper>>() {
-        }.getType());
+        return veiculoMapper.convertToSetDto(veiculosProprietario);
     }
 
     /**
@@ -70,12 +65,12 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
      * @param veiculo veículo que será marcado como principal.
      */
     public void selecionaComoPrincipal(VeiculoInputMapper veiculo) {
-        // Atualiza os status dos veículos
+        // Atualiza o status do veículo
         atualizaStatusVeiculo(veiculo);
         // Busca todos os veículos associados ao proprietário pelo ID do proprietário
         Set<Veiculo> veiculosEncontrados = veiculoRepository.findAllByProprietarioId(veiculo.getIdProprietario());
         // Percorre os veículos encontrados
-        veiculosEncontrados.stream().forEach(v -> {
+        veiculosEncontrados.forEach(v -> {
             // Se o id do veículo não for igual ao id do veículo que está sendo atualizado
             if (!v.getId().equals(veiculo.getId())) {
                 v.setPrincipal(false);
@@ -85,17 +80,17 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
     }
 
     /**
-     * Atualiza os status dos veículos, desmarcando todos como não principais e marcando o específico como principal.
+     * Atualiza status do veículo
      */
     private void atualizaStatusVeiculo(VeiculoInputMapper veiculo) {
-        final Veiculo veiculoEncontrado = veiculoRepository.findById(veiculo.getId()).get();
+        final Veiculo veiculoEncontrado = findById(veiculo.getId());
         veiculoEncontrado.setPrincipal(!veiculo.isPrincipal());
         veiculoRepository.save(veiculoEncontrado);
     }
 
     public Optional<VeiculoOutputMapper> findVeiculoPrincipal(Long idProprietario) {
         Optional<Veiculo> veiculoEncontrado = veiculoRepository.findByProprietarioIdAndPrincipal(idProprietario, true);
-        return veiculoEncontrado.map(veiculo -> Optional.ofNullable(modelMapper.map(veiculo, VeiculoOutputMapper.class))).orElse(null);
+        return veiculoEncontrado.map(veiculo -> Optional.ofNullable(veiculoMapper.convertToDto(veiculo))).orElse(null);
     }
 
     public Veiculo save(Veiculo veiculo) {

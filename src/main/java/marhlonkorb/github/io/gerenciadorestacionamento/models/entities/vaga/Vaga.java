@@ -36,10 +36,6 @@ public class Vaga extends EntidadeAuditada {
         return veiculo;
     }
 
-//    public void setVeiculo(Veiculo veiculo) {
-//        this.veiculo = veiculo;
-//    }
-
     public Status getStatus() {
         return status;
     }

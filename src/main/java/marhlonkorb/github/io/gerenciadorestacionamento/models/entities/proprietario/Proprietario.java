@@ -2,7 +2,6 @@ package marhlonkorb.github.io.gerenciadorestacionamento.models.entities.propriet
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid.EntidadeComId;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.TipoPessoa;
@@ -25,9 +24,9 @@ public class Proprietario extends EntidadeComId {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "veiculo")
-    private Set<Veiculo> veiculo;
+    private Set<Veiculo> veiculos;
 
     @NotNull
     private String nome;
@@ -97,12 +96,12 @@ public class Proprietario extends EntidadeComId {
         this.telefone = telefone;
     }
 
-    public Set<Veiculo> getVeiculo() {
-        return veiculo;
+    public Set<Veiculo> getVeiculos() {
+        return veiculos;
     }
 
-    public void setVeiculo(Set<Veiculo> veiculo) {
-        this.veiculo = veiculo;
+    public void setVeiculos(Set<Veiculo> veiculos) {
+        this.veiculos = veiculos;
     }
 
     public TipoPessoa getTipoPessoa() {

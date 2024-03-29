@@ -17,7 +17,7 @@ public class VinculoVeiculoVagaUseCase {
 
     @Transactional(rollbackFor = Exception.class)
     public void execute(Long idVeiculo, Long idVaga) {
-        final Veiculo veiculoEncontrado = veiculoService.getVeiculoById(idVeiculo);
+        final Veiculo veiculoEncontrado = veiculoService.findById(idVeiculo);
         final Vaga vagaEncontrada = vagaService.getVagaById(idVaga);
         if (!veiculoEncontrado.isContemVaga() && !vagaEncontrada.isContemVeiculo()) {
             veiculoEncontrado.adicionarVaga(vagaEncontrada);
