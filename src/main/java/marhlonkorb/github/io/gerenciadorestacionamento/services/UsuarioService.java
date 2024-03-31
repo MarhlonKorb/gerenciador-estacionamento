@@ -12,6 +12,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.U
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.validador.IUsuarioValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
+import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -23,10 +24,12 @@ import java.util.Optional;
 public class UsuarioService extends AbstractEntityService<Usuario, Long, UsuarioInputMapper, UsuarioOutputMapper> {
     private final UsuarioRepository usuarioRepository;
     private final IUsuarioValidador iUsuarioValidador;
+    private final IEmailValidador iEmailValidador;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, IUsuarioValidador iUsuarioValidador) {
+    public UsuarioService(UsuarioRepository usuarioRepository, IUsuarioValidador iUsuarioValidador, IEmailValidador iEmailValidador) {
         this.usuarioRepository = usuarioRepository;
         this.iUsuarioValidador = iUsuarioValidador;
+        this.iEmailValidador = iEmailValidador;
     }
 
     /**
@@ -37,15 +40,14 @@ public class UsuarioService extends AbstractEntityService<Usuario, Long, Usuario
      */
     public Usuario create(Usuario usuario) {
         iUsuarioValidador.validar(usuario);
-        String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.getPassword());
-        criptografarPassword(usuario);
+        String encryptedPassword = getPasswordCriptografado(usuario.getPassword());
+        usuario.setPassword(encryptedPassword);
         usuario.setStatus(Status.A);
         return usuarioRepository.save(usuario);
     }
 
-    private void criptografarPassword(Usuario usuario) {
-        String encryptedPassword = new BCryptPasswordEncoder().encode(usuario.getPassword());
-        usuario.setPassword(encryptedPassword);
+    private String getPasswordCriptografado(String password) {
+       return new BCryptPasswordEncoder().encode(password);
     }
 
     public Usuario findById(Long id) {
@@ -57,6 +59,7 @@ public class UsuarioService extends AbstractEntityService<Usuario, Long, Usuario
     }
 
     public Usuario findByEmail(String email){
+        iEmailValidador.validar(email);
         return usuarioRepository.findUsuarioByEmail(email);
     }
 }

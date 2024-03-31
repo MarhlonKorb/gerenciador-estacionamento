@@ -12,7 +12,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.V
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.exceptions.VeiculoNotFoundException;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VeiculoRepository;
 import org.springframework.stereotype.Service;
-
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -95,5 +95,9 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
 
     public Veiculo save(Veiculo veiculo) {
         return veiculoRepository.save(veiculo);
+    }
+
+    public Set<Veiculo> saveAll(Set<Veiculo> veiculo) {
+        return new HashSet<>(veiculoRepository.saveAll(veiculo));
     }
 }

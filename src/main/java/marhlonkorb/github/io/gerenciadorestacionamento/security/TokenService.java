@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Optional;
 
 /**
  * Serviço para geração e validação de tokens JWT.
@@ -69,7 +70,7 @@ public class TokenService {
                     .getSubject();
         } catch (JWTVerificationException exception) {
             // Retorna uma string vazia se a validação falhar
-            return "";
+             throw new JWTVerificationException("Token com formato inválido!");
         }
     }
 

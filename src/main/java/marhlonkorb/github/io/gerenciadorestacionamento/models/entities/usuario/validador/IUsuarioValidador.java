@@ -2,6 +2,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.
 
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
+import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.exception.FormatoEmailInvalidoException;
 
 /**
  * Interface que define contrato para as validações de usuário

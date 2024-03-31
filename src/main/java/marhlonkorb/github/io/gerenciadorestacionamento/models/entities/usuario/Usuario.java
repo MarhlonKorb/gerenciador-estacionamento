@@ -50,6 +50,7 @@ public class Usuario extends EntidadeAuditada implements UserDetails {
         var usuario = new UsuarioBuilder().
                 setId(this.getId()).
                 setEmail(this.getEmail()).
+                setPassword(this.getPassword()).
                 setRole(this.role).
                 setStatus(this.status).build();
         Gson gson = new Gson();

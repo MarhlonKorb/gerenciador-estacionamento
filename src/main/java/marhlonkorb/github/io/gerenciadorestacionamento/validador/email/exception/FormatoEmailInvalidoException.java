@@ -3,7 +3,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.validador.email.exceptio
 /**
  * Exception para formato de email inválido
  */
-public class FormatoEmailInvalidoException extends Exception {
+public class FormatoEmailInvalidoException extends RuntimeException {
     public FormatoEmailInvalidoException(String mensagem) {
         super(mensagem);
     }

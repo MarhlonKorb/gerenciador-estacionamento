@@ -5,40 +5,34 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.U
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.builder.UsuarioBuilder;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.validador.IUsuarioValidador;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.validador.UsuarioValidadorImpl;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
-import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.EmailValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
+import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.exception.FormatoEmailInvalidoException;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@RunWith(SpringRunner.class)
 class UsuarioServiceTest {
 
-    @Mock
-    private UsuarioRepository usuarioRepository;
-    @Mock
+    @Autowired
     private IUsuarioValidador iUsuarioValidador;
 
-    @Mock
+    @Autowired
     private IEmailValidador iEmailValidador;
 
-    @InjectMocks
+    @Autowired
     private UsuarioService usuarioService;
 
     @Test
-    void deveCriarUsuarioAtivoQuandoExecutarMetodoCreate(){
-        Usuario usuario = new UsuarioBuilder().setEmail("teste@teste.com").setPassword("teste").build();
-        Mockito.when(usuarioRepository.save(usuario)).thenReturn(usuario);
-        // Executa método a ser testado
-        usuarioService.create(usuario);
+    void deveCriarUsuarioComStatusAtivoQuandoUsuarioForValido() {
+        Usuario usuario = new UsuarioBuilder().setEmail("teste1@teste.com").setPassword("teste").build();
         // Não deve lançar exception durante a execução do método
         assertDoesNotThrow(() -> usuarioService.create(usuario));
         // Deve ser criado usuário com Status Ativo
@@ -46,16 +40,35 @@ class UsuarioServiceTest {
     }
 
     @Test
-    void deveLancarExceptionQuandoPasswordForNulo(){
-        // Deve lançar exception durante a execução do método
-        Assert.assertThrows(IllegalArgumentException.class, () -> usuarioService.create(new Usuario()));
+    void deveCriptografarSenhaQuandoCriarNovoUsuario() {
+        Usuario usuario = new UsuarioBuilder().setEmail("teste2@teste.com").setPassword("teste").build();
+        var senhaInicial = usuario.getPassword();
+        // Não deve lançar exception durante a execução do método
+        var usuarioCriado = usuarioService.create(usuario);
+        // Deve ser criado usuário com Status Ativo
+        Assert.assertNotEquals(senhaInicial, usuarioCriado.getPassword());
     }
 
     @Test
-    void deveCriarUsuarioQuandoSenhaNaoForNula(){
-        Usuario usuario = new UsuarioBuilder().setPassword("teste").build();
+    void deveLancarExceptionQuandoUsuarioJaEstiverCadastrado() {
+        Usuario usuario = new UsuarioBuilder().setEmail("teste3@teste.com").setPassword("teste").build();
+        // Executa método a ser testado
+        usuarioService.create(usuario);
+        // Deve lançar exception durante a execução do método
+        assertThrows(UsuarioException.class, () -> usuarioService.create(usuario));
+    }
+
+    @Test
+    void deveLancarExceptionQuandoPasswordForNulo() {
+        // Deve lançar exception durante a execução do método
+        Assert.assertThrows(FormatoEmailInvalidoException.class, () -> usuarioService.create(new Usuario()));
+    }
+
+    @Test
+    void deveCriarUsuarioQuandoEmailESenhaNaoForemNulos() {
+        Usuario usuario = new UsuarioBuilder().setEmail("teste4@teste.com").setPassword("teste").build();;
         // Não deve lançar exception durante a execução do método
-       assertDoesNotThrow(() -> usuarioService.create(usuario));
+        assertDoesNotThrow(() -> usuarioService.create(usuario));
     }
 
 }

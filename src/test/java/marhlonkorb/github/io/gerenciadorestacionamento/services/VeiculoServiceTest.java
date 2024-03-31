@@ -23,11 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class VeiculoServiceTest {
 
     @Autowired
-    private VeiculoRepository veiculoRepository;
-    @Autowired
     private VeiculoService veiculoService;
     @Autowired
     private ProprietarioService proprietarioService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Test
     void deveRetornarVeiculoCriadoPeloId() {
@@ -59,7 +60,7 @@ class VeiculoServiceTest {
         proprietario.setVeiculos(veiculos);
         // Salva os registros
         var proprietarioSalvo = proprietarioService.save(proprietario);
-        veiculoRepository.saveAll(veiculos);
+        veiculoService.saveAll(veiculos);
         // Executa o método a ser testado
         var veiculosEncontrados = veiculoService.findAllByIdProprietario(proprietarioSalvo.getId());
         assertEquals(veiculos.size(), veiculosEncontrados.size());
@@ -94,7 +95,7 @@ class VeiculoServiceTest {
         // Cria veículo
         var veiculo = new Veiculo("placa1", "Marca1", "Modelo1");
         // Salva e retorna veículo criado
-        var veiculoCriado = veiculoRepository.save(veiculo);
+        var veiculoCriado = veiculoService.save(veiculo);
         // Cria VeiculoInputMapper
         var veiculoInput = new VeiculoInputMapper();
         // Adiciona id do veículo criado ao objeto
@@ -114,8 +115,8 @@ class VeiculoServiceTest {
         // Seta veículo1 como principal
         veiculoPrincipalAtual.setPrincipal(true);
         // Salva e retorna veículo criado
-        var veiculoCriadoPrincipalAtual = veiculoRepository.save(veiculoPrincipalAtual);
-        var veiculoCriadoParametro = veiculoRepository.save(veiculoParametro);
+        var veiculoCriadoPrincipalAtual = veiculoService.save(veiculoPrincipalAtual);
+        var veiculoCriadoParametro = veiculoService.save(veiculoParametro);
         // Cria VeiculoInputMapper
         var veiculoInput = new VeiculoInputMapper();
         // Adiciona id do veículo criado ao objeto
@@ -141,7 +142,7 @@ class VeiculoServiceTest {
         // Vincula proprietario ao veículo
         veiculoPrincipalAtual.setProprietario(proprietario);
         // Retorna veículo principal salvo
-        var veiculoCriadoPrincipalAtual = veiculoRepository.save(veiculoPrincipalAtual);
+        var veiculoCriadoPrincipalAtual = veiculoService.save(veiculoPrincipalAtual);
         // Retorna veículo encontrado
         var veiculoEncontrado = veiculoService.findVeiculoPrincipal(proprietarioCriado.getId());
         assertEquals(veiculoEncontrado.get().getId(), veiculoCriadoPrincipalAtual.getId());
@@ -159,7 +160,7 @@ class VeiculoServiceTest {
         // Vincula proprietario ao veículo
         veiculoPrincipalAtual.setProprietario(proprietario);
         // Retorna veículo principal salvo
-        var veiculoCriadoPrincipalAtual = veiculoRepository.save(veiculoPrincipalAtual);
+        var veiculoCriadoPrincipalAtual = veiculoService.save(veiculoPrincipalAtual);
         // Retorna veículo encontrado
         var veiculoEncontrado = veiculoService.findVeiculoPrincipal(proprietarioCriado.getId());
         assertNull(veiculoEncontrado);

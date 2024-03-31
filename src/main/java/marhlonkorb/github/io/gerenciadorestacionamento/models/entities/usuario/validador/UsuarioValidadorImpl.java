@@ -4,6 +4,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.U
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
 import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
+import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.exception.FormatoEmailInvalidoException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,7 +27,7 @@ public class UsuarioValidadorImpl implements IUsuarioValidador {
 
     @Override
     public void contemPassword(String password) throws UsuarioException {
-        if(password == null || password.isEmpty()){
+        if (password == null || password.isEmpty()) {
             throw new UsuarioException("Senha não pode ser vazia.");
         }
     }
@@ -34,7 +35,7 @@ public class UsuarioValidadorImpl implements IUsuarioValidador {
     @Override
     public void validaIsUsuarioExistente(String email) {
         final var usuarioEncontrado = usuarioRepository.findByEmail(email);
-        if(usuarioEncontrado != null){
+        if (usuarioEncontrado != null) {
             throw new UsuarioException("Usuário já cadastrado.");
         }
     }
@@ -42,7 +43,7 @@ public class UsuarioValidadorImpl implements IUsuarioValidador {
     @Override
     public void validaIsUsuarioInexistente(String email) {
         final var usuarioEncontrado = usuarioRepository.findByEmail(email);
-        if(usuarioEncontrado == null){
+        if (usuarioEncontrado == null) {
             throw new UsuarioException("Usuário não cadastrado.");
         }
     }
