@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = ProprietarioDbConstantes.TABLE_NAME)
 public class Proprietario extends EntidadeComId {
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = ProprietarioDbConstantes.USUARIO_ID)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;

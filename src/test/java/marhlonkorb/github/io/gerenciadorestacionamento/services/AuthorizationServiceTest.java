@@ -42,9 +42,8 @@ class AuthorizationServiceTest {
 
     @Test
     void deveRetornarNuloQuandoUserDetailsNaoForEncontradoPeloUsername() {
-        var userDetailsEncontrado = authorizationService.loadUserByUsername("usuarioAuthorizationService");
         // Executa o método a ser testado
-        Assert.assertNull(userDetailsEncontrado);
+        assertThrows(UsernameNotFoundException.class, () -> authorizationService.loadUserByUsername("usuarioAuthorizationService"));
     }
 
 }

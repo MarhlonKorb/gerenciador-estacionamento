@@ -39,7 +39,7 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
      */
     public Veiculo findById(Long idVeiculo) {
         return veiculoRepository.findById(idVeiculo)
-                .orElseThrow(() -> new VeiculoNotFoundException("Veículo não encontrado."));
+                .orElseThrow(VeiculoNotFoundException::new);
     }
 
     /**
@@ -89,8 +89,8 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
     }
 
     public Optional<VeiculoOutputMapper> findVeiculoPrincipal(Long idProprietario) {
-        Optional<Veiculo> veiculoEncontrado = veiculoRepository.findByProprietarioIdAndPrincipal(idProprietario, true);
-        return veiculoEncontrado.map(veiculo -> Optional.ofNullable(veiculoMapper.convertToDto(veiculo))).orElse(null);
+        Optional<Veiculo> veiculoEncontrado = Optional.ofNullable(veiculoRepository.findByProprietarioIdAndPrincipal(idProprietario, true).orElseThrow(VeiculoNotFoundException::new));
+        return Optional.ofNullable(veiculoMapper.convertToDto(veiculoEncontrado.get()));
     }
 
     public Veiculo save(Veiculo veiculo) {

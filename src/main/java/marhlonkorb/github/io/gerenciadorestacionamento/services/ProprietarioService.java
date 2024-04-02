@@ -7,6 +7,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprieta
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioOutputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.ProprietarioRepository;
+import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProprietarioService extends AbstractEntityService<Proprietario, Long, ProprietarioInputMapper, ProprietarioOutputMapper> {
     private final ProprietarioMapper proprietarioMapper;
-
     private final ProprietarioRepository proprietarioRepository;
+    private final IEmailValidador iEmailValidador;
 
-    public ProprietarioService(ProprietarioMapper proprietarioMapper, ProprietarioRepository proprietarioRepository) {
+    public ProprietarioService(ProprietarioMapper proprietarioMapper, ProprietarioRepository proprietarioRepository, IEmailValidador iEmailValidador) {
         this.proprietarioMapper = proprietarioMapper;
         this.proprietarioRepository = proprietarioRepository;
+        this.iEmailValidador = iEmailValidador;
     }
 
     /**
@@ -39,8 +41,8 @@ public class ProprietarioService extends AbstractEntityService<Proprietario, Lon
         return proprietarioRepository.save(proprietario);
     }
 
-    public ProprietarioOutputMapper getProprietarioByIdUsuario(Long idUsuario){
-        final Proprietario proprietarioEncontrado = proprietarioRepository.getByUsuarioId(idUsuario);
+    public ProprietarioOutputMapper getProprietarioByIdUsuario(Long idUsuario) {
+        var proprietarioEncontrado = proprietarioRepository.getByUsuarioId(idUsuario);
         return proprietarioMapper.convertToDto(proprietarioEncontrado);
     }
 
@@ -49,9 +51,10 @@ public class ProprietarioService extends AbstractEntityService<Proprietario, Lon
      *
      * @param usuario
      */
-    public void adicionaUsuarioNovoProprietario(Usuario usuario){
+    public void adicionaUsuarioNovoProprietario(Usuario usuario) {
         Proprietario proprietario = new Proprietario();
         proprietario.setUsuario(usuario);
+        iEmailValidador.validar(usuario.getEmail());
         proprietario.setNome(usuario.getEmail());
         save(proprietario);
     }

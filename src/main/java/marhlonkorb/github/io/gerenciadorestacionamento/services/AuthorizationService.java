@@ -13,11 +13,11 @@ public class AuthorizationService implements UserDetailsService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            return usuarioRepository.findByEmail(username);
-        } catch (UsernameNotFoundException e) {
+    public UserDetails loadUserByUsername(String username) {
+        var userDetails = usuarioRepository.findByEmail(username);
+        if (userDetails == null) {
             throw new UsernameNotFoundException("Usuário não encontrado!");
         }
+        return userDetails;
     }
 }

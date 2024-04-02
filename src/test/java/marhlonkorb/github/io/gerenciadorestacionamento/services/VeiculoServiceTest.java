@@ -5,13 +5,13 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprieta
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.exceptions.VeiculoNotFoundException;
-import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VeiculoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -67,14 +67,13 @@ class VeiculoServiceTest {
     }
 
     @Test
-    void naoDeveRetornarVeiculosQuandoProprietarioNaoTiverVeiculosCadastrados() {
+    void deveRetornarListaVaziaQuandoProprietarioNaoTiverVeiculosCadastrados() {
         var proprietario = new Proprietario();
-        proprietario.setNome("proprietario1");
-        proprietario.setVeiculos(null);
+        proprietario.setNome("proprietario10");
         var proprietarioSalvo = proprietarioService.save(proprietario);
         // Executa o método a ser testado
         var veiculosEncontrados = veiculoService.findAllByIdProprietario(proprietarioSalvo.getId());
-        assertEquals(0, veiculosEncontrados.size());
+        assertTrue(veiculosEncontrados.isEmpty());
     }
 
     @Test
@@ -149,6 +148,7 @@ class VeiculoServiceTest {
     }
 
     @Test
+    @Transactional
     void deveRetornarNuloQuandoProprietarioNaoTiverVeiculoPrincipal() {
         var veiculoPrincipalAtual = new Veiculo("placa1", "Marca1", "Modelo1");
         veiculoPrincipalAtual.setPrincipal(false);
@@ -161,9 +161,7 @@ class VeiculoServiceTest {
         veiculoPrincipalAtual.setProprietario(proprietario);
         // Retorna veículo principal salvo
         var veiculoCriadoPrincipalAtual = veiculoService.save(veiculoPrincipalAtual);
-        // Retorna veículo encontrado
-        var veiculoEncontrado = veiculoService.findVeiculoPrincipal(proprietarioCriado.getId());
-        assertNull(veiculoEncontrado);
+        assertThrows(VeiculoNotFoundException.class, () -> veiculoService.findVeiculoPrincipal(proprietarioCriado.getId()));
     }
 
     @Test

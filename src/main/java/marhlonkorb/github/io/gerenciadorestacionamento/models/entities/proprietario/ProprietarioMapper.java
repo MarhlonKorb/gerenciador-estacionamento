@@ -6,20 +6,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProprietarioMapper extends AbstractEntityMapper<Proprietario, ProprietarioInputMapper, ProprietarioOutputMapper> {
-    private final ModelMapper modelMapper;
-
-    public ProprietarioMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public ProprietarioOutputMapper convertToDto(Proprietario input) {
-         return modelMapper.map(input, ProprietarioOutputMapper.class);
+         return getModelMapper().map(input, ProprietarioOutputMapper.class);
     }
 
     @Override
     public Proprietario convertToEntity(ProprietarioInputMapper input) {
-        return modelMapper.map(input, Proprietario.class);
+        return getModelMapper().map(input, Proprietario.class);
     }
 
 }

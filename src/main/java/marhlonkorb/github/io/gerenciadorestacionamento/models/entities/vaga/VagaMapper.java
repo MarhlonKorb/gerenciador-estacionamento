@@ -16,17 +16,15 @@ public class VagaMapper extends AbstractEntityMapper<Vaga, VagaInputMapper, Vaga
 
     @Autowired
     VeiculoRepository veiculoRepository;
-    @Autowired
-    ModelMapper modelMapper;
 
     @Override
     public VagaOutputMapper convertToDto(Vaga input) {
-        return modelMapper.map(input, VagaOutputMapper.class);
+        return getModelMapper().map(input, VagaOutputMapper.class);
     }
 
     @Override
     public Vaga convertToEntity(VagaInputMapper input) {
-        return modelMapper.map(input, Vaga.class);
+        return getModelMapper().map(input, Vaga.class);
     }
 
 }
