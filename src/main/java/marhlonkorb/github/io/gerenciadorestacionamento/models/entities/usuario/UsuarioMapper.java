@@ -5,7 +5,9 @@ import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepos
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-
+/**
+ * Mapper da entidade Usuário
+ */
 @Component
 public class UsuarioMapper extends AbstractEntityMapper<Usuario, UsuarioInputMapper, UsuarioOutputMapper> {
 

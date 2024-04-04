@@ -3,6 +3,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.services;
 import jakarta.transaction.Transactional;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.Proprietario;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.exceptions.ProprietarioNotFoundException;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.ProprietarioRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,11 +66,42 @@ class ProprietarioServiceTest {
         usuario.setEmail("usuarioproprietario1@teste.com");
         usuario.setPassword("teste");
         var usuarioCriado = usuarioService.create(usuario);
+        // Cria um proprietário
+        Proprietario proprietario = new Proprietario();
+        proprietario.setNome("proprietario2");
+        Proprietario proprietarioCriado = proprietarioService.save(proprietario);
         // Executa o método a ser testado
-        proprietarioService.adicionaUsuarioNovoProprietario(usuario);
-        var proprietarioCriado = proprietarioService.getProprietarioById(1L);
+        proprietarioService.adicionaUsuarioNovoProprietario(usuarioCriado);
+        var proprietarioEncontrado = proprietarioService.getProprietarioById(proprietarioCriado.getId());
         // Then
-        assertNotNull(proprietarioCriado);
-        assertNotNull(proprietarioCriado.getId());
+        assertNotNull(proprietarioEncontrado);
+        assertNotNull(proprietarioEncontrado.getId());
+    }
+
+    @Test
+    @Transactional
+    void deveRetornarOutputMapperDoProprietarioQuandoForEncontradoProprietarioPeloIdUsuario() {
+        // Cria usuário
+        Usuario usuario = new Usuario();
+        usuario.setEmail("usuarioproprietario5@teste.com");
+        usuario.setPassword("teste");
+        var usuarioCriado = usuarioService.create(usuario);
+        proprietarioService.adicionaUsuarioNovoProprietario(usuarioCriado);
+        // Executa o método a ser testado
+        var proprietarioOutput = proprietarioService.getProprietarioByIdUsuario(usuarioCriado.getId());
+        assertNotNull(proprietarioOutput);
+        assertEquals(usuarioCriado.getId(), proprietarioOutput.getIdUsuario());
+    }
+
+    @Test
+    @Transactional
+    void deveLancarExceptionQuandoNaoForEncontradoProprietarioPeloIdUsuario() {
+        // Cria usuário
+        Usuario usuario = new Usuario();
+        usuario.setEmail("usuarioproprietario5@teste.com");
+        usuario.setPassword("teste");
+        var usuarioCriado = usuarioService.create(usuario);
+        // Executa o método a ser testado
+        assertThrows(ProprietarioNotFoundException.class, () -> proprietarioService.getProprietarioByIdUsuario(usuarioCriado.getId()));
     }
 }

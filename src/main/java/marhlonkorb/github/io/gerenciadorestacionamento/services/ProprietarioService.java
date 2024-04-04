@@ -1,10 +1,12 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
+import jakarta.transaction.Transactional;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityService;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.Proprietario;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.exceptions.ProprietarioNotFoundException;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.ProprietarioRepository;
 import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
@@ -42,7 +44,7 @@ public class ProprietarioService extends AbstractEntityService<Proprietario, Lon
     }
 
     public ProprietarioOutputMapper getProprietarioByIdUsuario(Long idUsuario) {
-        var proprietarioEncontrado = proprietarioRepository.getByUsuarioId(idUsuario);
+        var proprietarioEncontrado = proprietarioRepository.getByUsuarioId(idUsuario).orElseThrow(ProprietarioNotFoundException::new);
         return proprietarioMapper.convertToDto(proprietarioEncontrado);
     }
 
@@ -51,6 +53,7 @@ public class ProprietarioService extends AbstractEntityService<Proprietario, Lon
      *
      * @param usuario
      */
+    @Transactional
     public void adicionaUsuarioNovoProprietario(Usuario usuario) {
         Proprietario proprietario = new Proprietario();
         proprietario.setUsuario(usuario);

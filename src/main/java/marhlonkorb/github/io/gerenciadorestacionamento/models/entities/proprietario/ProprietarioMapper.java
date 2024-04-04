@@ -3,7 +3,9 @@ package marhlonkorb.github.io.gerenciadorestacionamento.models.entities.propriet
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
+/**
+ * Mapper da entidade Proprietário
+ */
 @Component
 public class ProprietarioMapper extends AbstractEntityMapper<Proprietario, ProprietarioInputMapper, ProprietarioOutputMapper> {
 

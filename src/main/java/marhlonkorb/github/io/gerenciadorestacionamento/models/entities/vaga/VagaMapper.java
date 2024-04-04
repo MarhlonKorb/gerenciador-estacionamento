@@ -7,15 +7,11 @@ import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VeiculoRepos
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+/**
+ * Mapper da entidade Vaga
+ */
 @Component
 public class VagaMapper extends AbstractEntityMapper<Vaga, VagaInputMapper, VagaOutputMapper> {
-
-    @Autowired
-    VagaRepository vagaRepository;
-
-    @Autowired
-    VeiculoRepository veiculoRepository;
 
     @Override
     public VagaOutputMapper convertToDto(Vaga input) {

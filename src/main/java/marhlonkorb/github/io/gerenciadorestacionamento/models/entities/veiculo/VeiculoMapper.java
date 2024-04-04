@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Set;
 
+/**
+ * Mapper da entidade Veículo
+ */
 @Component
 public class VeiculoMapper extends AbstractEntityMapper<Veiculo, VeiculoInputMapper, VeiculoOutputMapper> {
 
