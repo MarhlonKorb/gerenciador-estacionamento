@@ -15,7 +15,6 @@ import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepos
 import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 /**
  * Service da entidade Usuario
@@ -47,19 +46,23 @@ public class UsuarioService extends AbstractEntityService<Usuario, Long, Usuario
     }
 
     private String getPasswordCriptografado(String password) {
-       return new BCryptPasswordEncoder().encode(password);
+        return new BCryptPasswordEncoder().encode(password);
     }
 
     public Usuario findById(Long id) {
-        final Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
+        var usuarioEncontrado = usuarioRepository.findById(id);
         if (usuarioEncontrado.isEmpty()) {
             throw new UsuarioException("Usuário não encontrado.");
         }
         return usuarioEncontrado.get();
     }
 
-    public Usuario findByEmail(String email){
+    public Usuario findByEmail(String email) {
         iEmailValidador.validar(email);
-        return usuarioRepository.findUsuarioByEmail(email);
+        var usuarioEncontrado = usuarioRepository.findUsuarioByEmail(email);
+        if (usuarioEncontrado.isEmpty()) {
+            throw new UsuarioException("Usuário não encontrado.");
+        }
+        return usuarioEncontrado.get();
     }
 }

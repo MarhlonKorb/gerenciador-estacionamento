@@ -5,7 +5,6 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.U
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.builder.UsuarioBuilder;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.validador.IUsuarioValidador;
-import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
 import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.exception.FormatoEmailInvalidoException;
 import org.junit.Assert;
@@ -66,9 +65,37 @@ class UsuarioServiceTest {
 
     @Test
     void deveCriarUsuarioQuandoEmailESenhaNaoForemNulos() {
-        Usuario usuario = new UsuarioBuilder().setEmail("teste4@teste.com").setPassword("teste").build();;
+        Usuario usuario = new UsuarioBuilder().setEmail("teste4@teste.com").setPassword("teste").build();
+        ;
         // Não deve lançar exception durante a execução do método
         assertDoesNotThrow(() -> usuarioService.create(usuario));
     }
 
+    @Test
+    void deveRetornarUsuarioPeloIdQuandoUsuarioForEncontradoPeloId() {
+        Usuario usuario = new UsuarioBuilder().setEmail("teste10@teste.com").setPassword("teste").build();
+        var usuarioCriado = usuarioService.create(usuario);
+        var usuarioEncontrado = usuarioService.findById(usuarioCriado.getId());
+        assertEquals(usuarioCriado.getId(), usuarioEncontrado.getId());
+        assertEquals(usuarioCriado.getEmail(), usuarioEncontrado.getEmail());
+    }
+
+    @Test
+    void deveLancarExceptionQuandoUsuarioNaoEstiverCadastrado() {
+        assertThrows(UsuarioException.class, () -> usuarioService.findById(12L));
+    }
+
+    @Test
+    void deveRetornarUsuarioPeloEmailQuandoUsuarioForEncontrado() {
+        Usuario usuario = new UsuarioBuilder().setEmail("teste11@teste.com").setPassword("teste").build();
+        var usuarioCriado = usuarioService.create(usuario);
+        var usuarioEncontrado = usuarioService.findByEmail(usuarioCriado.getEmail());
+        assertEquals(usuarioCriado.getId(), usuarioEncontrado.getId());
+        assertEquals(usuarioCriado.getEmail(), usuarioEncontrado.getEmail());
+    }
+
+    @Test
+    void deveLancarExceptionQuandoUsuarioNaoForEncontradoUsuarioComEmailInformado() {
+        assertThrows(UsuarioException.class, () -> usuarioService.findByEmail("teste@varP.com.br"));
+    }
 }

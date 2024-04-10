@@ -6,9 +6,9 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.U
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputCadastro;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.validador.IUsuarioValidador;
-import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
 import marhlonkorb.github.io.gerenciadorestacionamento.security.TokenService;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.CriaUsuarioProprietarioUseCase;
+import marhlonkorb.github.io.gerenciadorestacionamento.services.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +28,7 @@ public class AuthenticationController {
     private final TokenService tokenService;
     private final CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase;
     private final IUsuarioValidador iUsuarioValidador;
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
     /**
      * Construtor da classe, injetando as dependências necessárias.
@@ -37,13 +37,12 @@ public class AuthenticationController {
      * @param tokenService          Serviço para geração e validação de tokens JWT.
      * @param iUsuarioValidador     Validador de usuário para garantir consistência nos dados.
      */
-    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase, IUsuarioValidador iUsuarioValidador,
-                                    UsuarioRepository usuarioRepository) {
+    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.criaUsuarioProprietarioUseCase = criaUsuarioProprietarioUseCase;
         this.iUsuarioValidador = iUsuarioValidador;
-        this.usuarioRepository = usuarioRepository;
+        this.usuarioService = usuarioService;
     }
 
     /**
@@ -75,7 +74,7 @@ public class AuthenticationController {
         try {
             // Cria um novo usuário e proprietário com base nos dados fornecidos
             criaUsuarioProprietarioUseCase.execute(data);
-            Usuario usuarioCriado = usuarioRepository.findUsuarioByEmail(data.email());
+            Usuario usuarioCriado = usuarioService.findByEmail(data.email());
             // Gera um token JWT para o novo usuário registrado
             String token = tokenService.generateToken(usuarioCriado);
             return ResponseEntity.ok(new LoginResponseDTO(token));
