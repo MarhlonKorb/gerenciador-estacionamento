@@ -2,11 +2,9 @@ package marhlonkorb.github.io.gerenciadorestacionamento.config;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -65,14 +63,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages_pt_BR");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
     }
 }
 
