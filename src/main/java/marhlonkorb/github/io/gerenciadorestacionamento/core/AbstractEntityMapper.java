@@ -9,11 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class AbstractEntityMapper<EntidadeComId, Input, DtoType> {
 
+    @Autowired
+    private ModelMapperConfig modelMapperConfig;
+
     protected abstract DtoType convertToDto(EntidadeComId input);
     protected abstract EntidadeComId convertToEntity(Input input);
 
     protected ModelMapper getModelMapper(){
-        return new ModelMapperConfig().getInstance();
+        return modelMapperConfig.getInstance();
     }
 
 }

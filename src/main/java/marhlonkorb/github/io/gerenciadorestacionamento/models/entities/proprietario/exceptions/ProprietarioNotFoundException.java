@@ -2,7 +2,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.models.entities.propriet
 
 public class ProprietarioNotFoundException extends RuntimeException {
 
-    public ProprietarioNotFoundException() {
-        super("Proprietário não encontrado!");
+    public ProprietarioNotFoundException(String message) {
+        super(message);
     }
 }

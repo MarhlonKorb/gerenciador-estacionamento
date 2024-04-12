@@ -6,6 +6,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityService;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.Status;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.utils.MessageUtil;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioOutputMapper;
@@ -21,14 +22,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UsuarioService extends AbstractEntityService<Usuario, Long, UsuarioInputMapper, UsuarioOutputMapper> {
+    private static final String USUARIO_NOT_FOUND_KEY = "exception.usuario.not.found";
     private final UsuarioRepository usuarioRepository;
     private final IUsuarioValidador iUsuarioValidador;
     private final IEmailValidador iEmailValidador;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, IUsuarioValidador iUsuarioValidador, IEmailValidador iEmailValidador) {
+    private final MessageUtil messageUtil;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, IUsuarioValidador iUsuarioValidador, IEmailValidador iEmailValidador, MessageUtil messageUtil) {
         this.usuarioRepository = usuarioRepository;
         this.iUsuarioValidador = iUsuarioValidador;
         this.iEmailValidador = iEmailValidador;
+        this.messageUtil = messageUtil;
     }
 
     /**
@@ -50,19 +55,11 @@ public class UsuarioService extends AbstractEntityService<Usuario, Long, Usuario
     }
 
     public Usuario findById(Long id) {
-        var usuarioEncontrado = usuarioRepository.findById(id);
-        if (usuarioEncontrado.isEmpty()) {
-            throw new UsuarioException("Usuário não encontrado.");
-        }
-        return usuarioEncontrado.get();
+        return usuarioRepository.findById(id).orElseThrow(() -> new UsuarioException(messageUtil.getMessage(USUARIO_NOT_FOUND_KEY)));
     }
 
     public Usuario findByEmail(String email) {
         iEmailValidador.validar(email);
-        var usuarioEncontrado = usuarioRepository.findUsuarioByEmail(email);
-        if (usuarioEncontrado.isEmpty()) {
-            throw new UsuarioException("Usuário não encontrado.");
-        }
-        return usuarioEncontrado.get();
+        return usuarioRepository.findUsuarioByEmail(email).orElseThrow(() -> new UsuarioException(messageUtil.getMessage(USUARIO_NOT_FOUND_KEY)));
     }
 }

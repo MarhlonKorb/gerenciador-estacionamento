@@ -9,9 +9,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.U
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,8 +23,8 @@ public class Proprietario extends EntidadeComId {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "veiculo")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = ProprietarioDbConstantes.PROPRIETARIO_ID)
     private Set<Veiculo> veiculos;
 
     @NotNull

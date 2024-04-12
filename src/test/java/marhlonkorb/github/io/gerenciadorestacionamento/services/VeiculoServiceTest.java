@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -161,7 +162,8 @@ class VeiculoServiceTest {
         veiculoPrincipalAtual.setProprietario(proprietario);
         // Retorna veículo principal salvo
         var veiculoCriadoPrincipalAtual = veiculoService.save(veiculoPrincipalAtual);
-        assertThrows(VeiculoNotFoundException.class, () -> veiculoService.findVeiculoPrincipal(proprietarioCriado.getId()));
+        var veiculoEncontrado = veiculoService.findVeiculoPrincipal(proprietarioCriado.getId());
+        assertEquals(Optional.empty(), veiculoEncontrado);
     }
 
     @Test

@@ -16,7 +16,7 @@ public abstract class ModelMapperSingleton {
             return instance;
         }
         instance = new ModelMapper();
-        applyConfig();
+//        applyConfig();
         return instance;
     }
 

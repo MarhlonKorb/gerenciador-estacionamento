@@ -5,6 +5,7 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityService;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.utils.MessageUtil;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoMapper;
@@ -12,6 +13,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.V
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.exceptions.VeiculoNotFoundException;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VeiculoRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -21,14 +23,17 @@ import java.util.Set;
  */
 @Service
 public class VeiculoService extends AbstractEntityService<Veiculo, Long, VeiculoInputMapper, VeiculoOutputMapper> {
-
+    private static final String VEICULO_NOT_FOUND_KEY = "exception.veiculo.not.found";
     private final VeiculoRepository veiculoRepository;
 
     private final VeiculoMapper veiculoMapper;
 
-    public VeiculoService(VeiculoRepository veiculoRepository, VeiculoMapper veiculoMapper) {
+    private final MessageUtil messageUtil;
+
+    public VeiculoService(VeiculoRepository veiculoRepository, VeiculoMapper veiculoMapper, MessageUtil messageUtil) {
         this.veiculoRepository = veiculoRepository;
         this.veiculoMapper = veiculoMapper;
+        this.messageUtil = messageUtil;
     }
 
     /**
@@ -39,7 +44,7 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
      */
     public Veiculo findById(Long idVeiculo) {
         return veiculoRepository.findById(idVeiculo)
-                .orElseThrow(VeiculoNotFoundException::new);
+                .orElseThrow(() -> new VeiculoNotFoundException(messageUtil.getMessage(VEICULO_NOT_FOUND_KEY)));
     }
 
     /**
@@ -88,9 +93,17 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
         veiculoRepository.save(veiculoEncontrado);
     }
 
+    /**
+     * Busca o veículo principal pelo id do proprietário
+     * @param idProprietario
+     * @return Optional<VeiculoOutputMapper>
+     */
     public Optional<VeiculoOutputMapper> findVeiculoPrincipal(Long idProprietario) {
-        Optional<Veiculo> veiculoEncontrado = Optional.ofNullable(veiculoRepository.findByProprietarioIdAndPrincipal(idProprietario, true).orElseThrow(VeiculoNotFoundException::new));
-        return Optional.ofNullable(veiculoMapper.convertToDto(veiculoEncontrado.get()));
+        Optional<Veiculo> veiculoEncontrado = veiculoRepository.findByProprietarioIdAndPrincipal(idProprietario, true);
+        if (veiculoEncontrado.isPresent()) {
+            return veiculoEncontrado.map(veiculoMapper::convertToDto);
+        }
+        return Optional.empty();
     }
 
     public Veiculo save(Veiculo veiculo) {

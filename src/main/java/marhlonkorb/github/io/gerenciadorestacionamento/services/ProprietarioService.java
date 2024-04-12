@@ -2,6 +2,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
 import jakarta.transaction.Transactional;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityService;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.utils.MessageUtil;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.Proprietario;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioMapper;
@@ -18,14 +19,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProprietarioService extends AbstractEntityService<Proprietario, Long, ProprietarioInputMapper, ProprietarioOutputMapper> {
+    private static final String PROPRIETARIO_NOT_FOUND_KEY = "exception.proprietario.not.found";
     private final ProprietarioMapper proprietarioMapper;
     private final ProprietarioRepository proprietarioRepository;
     private final IEmailValidador iEmailValidador;
 
-    public ProprietarioService(ProprietarioMapper proprietarioMapper, ProprietarioRepository proprietarioRepository, IEmailValidador iEmailValidador) {
+    private final MessageUtil messageUtil;
+
+    public ProprietarioService(ProprietarioMapper proprietarioMapper, ProprietarioRepository proprietarioRepository, IEmailValidador iEmailValidador, MessageUtil messageUtil) {
         this.proprietarioMapper = proprietarioMapper;
         this.proprietarioRepository = proprietarioRepository;
         this.iEmailValidador = iEmailValidador;
+        this.messageUtil = messageUtil;
     }
 
     /**
@@ -43,8 +48,9 @@ public class ProprietarioService extends AbstractEntityService<Proprietario, Lon
         return proprietarioRepository.save(proprietario);
     }
 
+//    @Transactional
     public ProprietarioOutputMapper getProprietarioByIdUsuario(Long idUsuario) {
-        var proprietarioEncontrado = proprietarioRepository.getByUsuarioId(idUsuario).orElseThrow(ProprietarioNotFoundException::new);
+        var proprietarioEncontrado = proprietarioRepository.getByUsuarioId(idUsuario).orElseThrow(() -> new ProprietarioNotFoundException(messageUtil.getMessage(PROPRIETARIO_NOT_FOUND_KEY)));
         return proprietarioMapper.convertToDto(proprietarioEncontrado);
     }
 
