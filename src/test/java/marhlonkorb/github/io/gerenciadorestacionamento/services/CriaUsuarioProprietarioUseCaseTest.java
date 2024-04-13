@@ -56,7 +56,7 @@ class CriaUsuarioProprietarioUseCaseTest {
         var usuarioInput = new UsuarioInputCadastro(null, "teste", Role.USER);
         // Executa método a ser testado
         Throwable exception = assertThrows(FormatoEmailInvalidoException.class, () -> criaUsuarioProprietarioUseCase.execute(usuarioInput));
-        assertEquals("E-mail é obrigatório.", exception.getLocalizedMessage());
+        assertEquals(messageUtil.getMessage("campo.email.obrigatorio"), exception.getLocalizedMessage());
     }
 
     @Test
@@ -64,13 +64,13 @@ class CriaUsuarioProprietarioUseCaseTest {
         var usuarioInput = new UsuarioInputCadastro("", "teste", Role.USER);
         // Executa método a ser testado
         Throwable exception = assertThrows(FormatoEmailInvalidoException.class, () -> criaUsuarioProprietarioUseCase.execute(usuarioInput));
-        assertEquals("E-mail é obrigatório.", exception.getLocalizedMessage());
+        assertEquals(messageUtil.getMessage("campo.email.obrigatorio"), exception.getLocalizedMessage());
     }
     @Test
     void deveLancarExceptionQuandoInformadoUsuarioComPasswordVazio() {
         var usuarioInput = new UsuarioInputCadastro("teste@teste1234.com", "", Role.USER);
         // Executa método a ser testado
         Throwable exception = assertThrows(UsuarioException.class, () -> criaUsuarioProprietarioUseCase.execute(usuarioInput));
-        assertEquals("Senha não pode ser vazia.", exception.getLocalizedMessage());
+        assertEquals(messageUtil.getMessage("campo.senha.obrigatorio"), exception.getLocalizedMessage());
     }
 }

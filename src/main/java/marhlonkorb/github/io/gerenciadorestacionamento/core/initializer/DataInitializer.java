@@ -16,14 +16,14 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        if (vagaRepository.findAll().isEmpty()) {
-//            for (int i = 0; i < 200; i++) {
-//                // Crie um novo registro com os dados desejados
-//                Vaga registro = new Vaga(StatusVaga.L);
-//                // Executa a inserção dos registros
-//                registro.setStatus(Status.A);
-//                vagaRepository.save(registro);
-//            }
-//        }
+        if (vagaRepository.findById(1L).isEmpty()) {
+            for (int i = 0; i < 200; i++) {
+                // Crie um novo registro com os dados desejados
+                Vaga vaga = new Vaga(StatusVaga.L);
+                // Executa a inserção dos registros
+                vaga.setStatus(Status.A);
+                vagaRepository.save(vaga);
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class VinculoVeiculoVagaUseCase {
+public class VinculaVeiculoVagaUseCase {
 
     @Autowired
     private VagaService vagaService;
@@ -18,7 +18,7 @@ public class VinculoVeiculoVagaUseCase {
     @Transactional(rollbackFor = Exception.class)
     public void execute(Long idVeiculo, Long idVaga) {
         final Veiculo veiculoEncontrado = veiculoService.findById(idVeiculo);
-        final Vaga vagaEncontrada = vagaService.getVagaById(idVaga);
+        final Vaga vagaEncontrada = vagaService.findById(idVaga);
         if (!veiculoEncontrado.isContemVaga() && !vagaEncontrada.isContemVeiculo()) {
             veiculoEncontrado.adicionarVaga(vagaEncontrada);
             vagaEncontrada.adicionarVeiculo(veiculoEncontrado);

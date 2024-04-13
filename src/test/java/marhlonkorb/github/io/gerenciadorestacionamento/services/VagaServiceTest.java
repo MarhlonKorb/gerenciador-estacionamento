@@ -27,7 +27,7 @@ class VagaServiceTest {
         vagaEsperada.setId(1L);
         Mockito.when(vagaRepository.findById(1L)).thenReturn(Optional.of(vagaEsperada));
         // Executa o método a ser testado
-        Vaga vagaEncontrada = vagaService.getVagaById(1L);
+        Vaga vagaEncontrada = vagaService.findById(1L);
         Assertions.assertEquals(vagaEsperada, vagaEncontrada);
     }
 
@@ -37,7 +37,7 @@ class VagaServiceTest {
         Mockito.when(vagaRepository.findById(1L)).thenReturn(Optional.empty());
         // Utilizando assertThrows para verificar se uma exceção é lançada quando nenhum vaga é encontrada
         Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> {
-            vagaService.getVagaById(1L);
+            vagaService.findById(1L);
         });
     }
 

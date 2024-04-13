@@ -11,9 +11,9 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.U
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioOutputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.validador.IUsuarioValidador;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.usuario.IUsuarioValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
-import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.IEmailValidador;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.email.IEmailValidador;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

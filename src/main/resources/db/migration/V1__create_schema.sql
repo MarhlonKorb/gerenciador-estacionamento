@@ -5,7 +5,7 @@ CREATE TABLE "usuario"(
     criado_por VARCHAR(255),
     data_alteracao timestamp,
     data_criacao timestamp,
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     role VARCHAR(255),
     status VARCHAR(255)
@@ -14,7 +14,7 @@ CREATE TABLE "usuario"(
 CREATE TABLE "proprietario"(
     id BIGSERIAL PRIMARY KEY,
     apartamento VARCHAR(255),
-    cpf_cnpj VARCHAR(255),
+    cpf_cnpj VARCHAR(255) UNIQUE,
     data_nascimento timestamp,
     nome VARCHAR(255) NOT NULL,
     telefone VARCHAR(255),

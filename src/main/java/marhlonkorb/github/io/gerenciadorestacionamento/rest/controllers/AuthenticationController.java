@@ -1,11 +1,12 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
+import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.email.IEmailValidador;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.usuario.IUsuarioValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.AuthenticationDTO;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.LoginResponseDTO;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputCadastro;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.validador.IUsuarioValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.security.TokenService;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.CriaUsuarioProprietarioUseCase;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.UsuarioService;
@@ -29,6 +30,7 @@ public class AuthenticationController {
     private final CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase;
     private final IUsuarioValidador iUsuarioValidador;
     private final UsuarioService usuarioService;
+    private final IEmailValidador iEmailValidador;
 
     /**
      * Construtor da classe, injetando as dependências necessárias.
@@ -37,12 +39,13 @@ public class AuthenticationController {
      * @param tokenService          Serviço para geração e validação de tokens JWT.
      * @param iUsuarioValidador     Validador de usuário para garantir consistência nos dados.
      */
-    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService, IEmailValidador iEmailValidador) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.criaUsuarioProprietarioUseCase = criaUsuarioProprietarioUseCase;
         this.iUsuarioValidador = iUsuarioValidador;
         this.usuarioService = usuarioService;
+        this.iEmailValidador = iEmailValidador;
     }
 
     /**
@@ -54,7 +57,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO data) {
         // Valida se o usuário existe antes da autenticação
-        iUsuarioValidador.validaIsUsuarioInexistente(data.email());
+        iUsuarioValidador.validaUsuarioIsCadastrado(data.email());
         // Cria um token de autenticação para o usuário
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = authenticationManager.authenticate(usernamePassword);

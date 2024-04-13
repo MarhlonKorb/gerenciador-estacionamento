@@ -45,7 +45,7 @@ class ProprietarioServiceTest {
     @Test
     void deveLancarExceptionQuandoNaoEncontrarProprietarioPeloId() {
         Long idProprietario = 10L;
-        assertThrows(InvalidDataAccessApiUsageException.class, () -> proprietarioService.getProprietarioById(idProprietario));
+        assertThrows(ProprietarioNotFoundException.class, () -> proprietarioService.getProprietarioById(idProprietario));
     }
 
     @Test
