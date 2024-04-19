@@ -8,8 +8,10 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.e
  */
 public interface IUsuarioValidador {
     public void validaUsuarioIsCadastrado(String email);
+    public void validaUsuarioIsNotCadastrado(String email);
 
     public void contemPassword(String password) throws UsuarioException;
 
     public void validar(Usuario usuario);
+
 }

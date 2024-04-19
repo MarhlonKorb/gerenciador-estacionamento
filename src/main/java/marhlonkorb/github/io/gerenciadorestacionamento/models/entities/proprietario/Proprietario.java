@@ -18,12 +18,12 @@ import java.util.Set;
 @Entity
 @Table(name = ProprietarioDbConstantes.TABLE_NAME)
 public class Proprietario extends EntidadeComId {
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = ProprietarioDbConstantes.USUARIO_ID)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
     @JoinColumn(name = ProprietarioDbConstantes.PROPRIETARIO_ID)
     private Set<Veiculo> veiculos;
 

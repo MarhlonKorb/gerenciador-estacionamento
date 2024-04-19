@@ -7,9 +7,11 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.L
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputCadastro;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
+import marhlonkorb.github.io.gerenciadorestacionamento.rest.exception.ApiErrors;
 import marhlonkorb.github.io.gerenciadorestacionamento.security.TokenService;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.CriaUsuarioProprietarioUseCase;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.UsuarioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,7 +59,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO data) {
         // Valida se o usuário existe antes da autenticação
-        iUsuarioValidador.validaUsuarioIsCadastrado(data.email());
+        iUsuarioValidador.validaUsuarioIsNotCadastrado(data.email());
         // Cria um token de autenticação para o usuário
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = authenticationManager.authenticate(usernamePassword);
@@ -82,7 +84,7 @@ public class AuthenticationController {
             String token = tokenService.generateToken(usuarioCriado);
             return ResponseEntity.ok(new LoginResponseDTO(token));
         } catch (UsuarioException ex) {
-            return ResponseEntity.badRequest().body(ex.getLocalizedMessage());
+            return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, ex.getMessage()));
         }
     }
 }
