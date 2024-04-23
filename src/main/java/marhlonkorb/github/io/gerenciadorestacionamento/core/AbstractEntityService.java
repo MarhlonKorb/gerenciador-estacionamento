@@ -1,6 +1,8 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid.EntidadeComId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,12 +39,14 @@ public abstract class AbstractEntityService<EntidadeComId, ID, Input, DtoType> {
         return entitiesPage.map(abstractEntityMapper::convertToDto);
     }
 
+    @Transactional
     public DtoType create(Input input) {
         final var convertedInput = abstractEntityMapper.convertToEntity(input);
         EntidadeComId savedEntity = repository.save(convertedInput);
         return abstractEntityMapper.convertToDto(savedEntity);
     }
 
+    @Transactional
     public DtoType update(ID id, Input input) {
         if (!repository.existsById(id)) {
             throw new EntityNotFoundException("Não foi possível encontrar a entidade com o ID " + id);

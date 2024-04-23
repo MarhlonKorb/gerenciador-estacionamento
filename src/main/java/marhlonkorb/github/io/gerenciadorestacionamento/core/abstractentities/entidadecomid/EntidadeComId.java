@@ -1,9 +1,7 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 /**
