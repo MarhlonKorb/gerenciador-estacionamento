@@ -4,6 +4,7 @@
  */
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
+import jakarta.transaction.Transactional;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityService;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.utils.MessageUtil;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
@@ -62,26 +63,23 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
     }
 
     /**
-     * Marca um veículo como principal para um determinado proprietário.
-     * <p>
-     * Busca todos os veículos associados a um proprietário com base no ID do proprietário,
-     * atualiza os status dos veículos e salva as alterações no repositório.
+     * Verifica se o veículo está marcado como principal, se estiver altera para false.
+     * Se o veículo não for o principal, desmarca o veículo principal e marca o veículo atual como principal.
      *
-     * @param veiculo veículo que será marcado como principal.
+     * @param veiculo
      */
-    public void selecionaComoPrincipal(VeiculoInputMapper veiculo) {
-        // Atualiza o status do veículo
-        atualizaStatusVeiculo(veiculo);
-        // Busca todos os veículos associados ao proprietário pelo ID do proprietário
-        Set<Veiculo> veiculosEncontrados = veiculoRepository.findAllByProprietarioId(veiculo.getIdProprietario());
-        // Percorre os veículos encontrados
-        veiculosEncontrados.forEach(v -> {
-            // Se o id do veículo não for igual ao id do veículo que está sendo atualizado
-            if (!v.getId().equals(veiculo.getId())) {
-                v.setPrincipal(false);
-            }
-        });
-        veiculoRepository.saveAll(veiculosEncontrados);
+    @Transactional
+    public void updateVeiculoPrincipal(VeiculoInputMapper veiculo) {
+        if (veiculo.isPrincipal()) {
+            var veiculoEncontrado = veiculoRepository.findById(veiculo.getId()).get();
+            veiculoEncontrado.setPrincipal(false);
+            veiculoRepository.save(veiculoEncontrado);
+            return;
+        }
+        // Altera para false o veículo principal do proprietário
+        veiculoRepository.updateVeiculoPrincipalFalse(veiculo.getIdProprietario());
+        // Altera para true o veículo principal atual do proprietário
+        veiculoRepository.updateVeiculoPrincipalTrue(veiculo.getId(), veiculo.getIdProprietario());
     }
 
     /**
@@ -95,6 +93,7 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
 
     /**
      * Busca o veículo principal pelo id do proprietário
+     *
      * @param idProprietario
      * @return Optional<VeiculoOutputMapper>
      */

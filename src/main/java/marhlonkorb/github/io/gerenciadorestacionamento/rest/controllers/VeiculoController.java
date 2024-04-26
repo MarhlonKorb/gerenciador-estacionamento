@@ -37,7 +37,7 @@ public class VeiculoController extends AbstractEntityController<Veiculo, Long, V
 
     @PutMapping("/selecionaComoPrincipal")
     public void selecionaComoPrincipal(@RequestBody VeiculoInputMapper veiculo){
-        veiculoService.selecionaComoPrincipal(veiculo);
+        veiculoService.updateVeiculoPrincipal(veiculo);
     }
 
 }

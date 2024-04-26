@@ -1,8 +1,5 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 /**
  * Input da entidade Veiculo
  */

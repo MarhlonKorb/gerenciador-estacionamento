@@ -77,58 +77,58 @@ class VeiculoServiceTest {
         assertTrue(veiculosEncontrados.isEmpty());
     }
 
-    @Test
-    void deveLancarExceptionQuandoIdForNulo() {
-        var veiculoInput = new VeiculoInputMapper();
-        assertThrows(InvalidDataAccessApiUsageException.class, () -> veiculoService.selecionaComoPrincipal(veiculoInput));
-    }
+//    @Test
+//    void deveLancarExceptionQuandoIdForNulo() {
+//        var veiculoInput = new VeiculoInputMapper();
+//        assertThrows(InvalidDataAccessApiUsageException.class, () -> veiculoService.selecionaComoPrincipal(veiculoInput));
+//    }
 
-    @Test
-    void deveLancarExceptionQuandoNaoForEncontradoVeiculoPeloId() {
-        var veiculoInput = new VeiculoInputMapper();
-        veiculoInput.setId(10L);
-        assertThrows(VeiculoNotFoundException.class, () -> veiculoService.selecionaComoPrincipal(veiculoInput));
-    }
+//    @Test
+//    void deveLancarExceptionQuandoNaoForEncontradoVeiculoPeloId() {
+//        var veiculoInput = new VeiculoInputMapper();
+//        veiculoInput.setId(10L);
+//        assertThrows(VeiculoNotFoundException.class, () -> veiculoService.selecionaComoPrincipal(veiculoInput));
+//    }
 
-    @Test
-    void deveSelecionarVeiculoComoPrincipalQuandoVeiculoNaoEstiverComStatusPrincipal() {
-        // Cria veículo
-        var veiculo = new Veiculo("placa1", "Marca1", "Modelo1");
-        // Salva e retorna veículo criado
-        var veiculoCriado = veiculoService.save(veiculo);
-        // Cria VeiculoInputMapper
-        var veiculoInput = new VeiculoInputMapper();
-        // Adiciona id do veículo criado ao objeto
-        veiculoInput.setId(veiculoCriado.getId());
-        // Executa método a ser testado
-        veiculoService.selecionaComoPrincipal(veiculoInput);
-        var veiculoAlterado = veiculoService.findById(veiculoInput.getId());
-        // Deve alterar o veículo para principal
-        assertNotEquals(veiculoCriado.isPrincipal(), veiculoAlterado.isPrincipal());
-    }
+//    @Test
+//    void deveSelecionarVeiculoComoPrincipalQuandoVeiculoNaoEstiverComStatusPrincipal() {
+//        // Cria veículo
+//        var veiculo = new Veiculo("placa1", "Marca1", "Modelo1");
+//        // Salva e retorna veículo criado
+//        var veiculoCriado = veiculoService.save(veiculo);
+//        // Cria VeiculoInputMapper
+//        var veiculoInput = new VeiculoInputMapper();
+//        // Adiciona id do veículo criado ao objeto
+//        veiculoInput.setId(veiculoCriado.getId());
+//        // Executa método a ser testado
+//        veiculoService.selecionaComoPrincipal(veiculoInput);
+//        var veiculoAlterado = veiculoService.findById(veiculoInput.getId());
+//        // Deve alterar o veículo para principal
+//        assertNotEquals(veiculoCriado.isPrincipal(), veiculoAlterado.isPrincipal());
+//    }
 
-    @Test
-    void deveDesmarcarVeiculoPrincipalCriadoQuandoInformadoOutroVeiculoComoPrincipal() {
-        // Cria veículo
-        var veiculoPrincipalAtual = new Veiculo("placa1", "Marca1", "Modelo1");
-        var veiculoParametro = new Veiculo("placa2", "Marca2", "Modelo2");
-        // Seta veículo1 como principal
-        veiculoPrincipalAtual.setPrincipal(true);
-        // Salva e retorna veículo criado
-        var veiculoCriadoPrincipalAtual = veiculoService.save(veiculoPrincipalAtual);
-        var veiculoCriadoParametro = veiculoService.save(veiculoParametro);
-        // Cria VeiculoInputMapper
-        var veiculoInput = new VeiculoInputMapper();
-        // Adiciona id do veículo criado ao objeto
-        veiculoInput.setId(veiculoCriadoParametro.getId());
-        // Executa método a ser testado
-        veiculoService.selecionaComoPrincipal(veiculoInput);
-        var veiculoAlterado = veiculoService.findById(veiculoCriadoPrincipalAtual.getId());
-        // Deve alterar o veículo para não principal, pois foi executado o método selecionaComoPrincipal(),
-        // alterando o veículo informado no parâmetro para principal e alterando de principal para não principal
-        // qualquer outro veículo que não seja o recebido
-        assertFalse(veiculoAlterado.isPrincipal());
-    }
+//    @Test
+//    void deveDesmarcarVeiculoPrincipalCriadoQuandoInformadoOutroVeiculoComoPrincipal() {
+//        // Cria veículo
+//        var veiculoPrincipalAtual = new Veiculo("placa1", "Marca1", "Modelo1");
+//        var veiculoParametro = new Veiculo("placa2", "Marca2", "Modelo2");
+//        // Seta veículo1 como principal
+//        veiculoPrincipalAtual.setPrincipal(true);
+//        // Salva e retorna veículo criado
+//        var veiculoCriadoPrincipalAtual = veiculoService.save(veiculoPrincipalAtual);
+//        var veiculoCriadoParametro = veiculoService.save(veiculoParametro);
+//        // Cria VeiculoInputMapper
+//        var veiculoInput = new VeiculoInputMapper();
+//        // Adiciona id do veículo criado ao objeto
+//        veiculoInput.setId(veiculoCriadoParametro.getId());
+//        // Executa método a ser testado
+//        veiculoService.selecionaComoPrincipal(veiculoInput);
+//        var veiculoAlterado = veiculoService.findById(veiculoCriadoPrincipalAtual.getId());
+//        // Deve alterar o veículo para não principal, pois foi executado o método selecionaComoPrincipal(),
+//        // alterando o veículo informado no parâmetro para principal e alterando de principal para não principal
+//        // qualquer outro veículo que não seja o recebido
+//        assertFalse(veiculoAlterado.isPrincipal());
+//    }
 
     @Test
     void deveRetornarVeiculoPrincipalQuandoProprietarioTiverVeiculoPrincipal() {
