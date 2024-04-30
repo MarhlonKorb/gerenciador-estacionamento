@@ -10,5 +10,4 @@ COPY target/gerenciador-estacionamento-0.0.1-SNAPSHOT.jar /app/gerenciador-estac
 # Configure o diretório de trabalho
 WORKDIR /app
 
-# Adicione um tempo de espera de 30 segundos (ou o valor que você considerar apropriado)
 CMD ["java", "-jar", "gerenciador-estacionamento.jar"]
