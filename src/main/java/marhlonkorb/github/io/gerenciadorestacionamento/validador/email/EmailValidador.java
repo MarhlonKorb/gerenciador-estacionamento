@@ -21,11 +21,14 @@ public class EmailValidador implements IEmailValidador {
     private static final String EMAIL_OBRIGATORIO_KEY = "campo.email.obrigatorio";
     private static final String EMAIL_INVALIDO_KEY = "campo.email.invalido";
 
-    @Autowired
-    private MessageUtil messageUtil;
+    private final MessageUtil messageUtil;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public EmailValidador(MessageUtil messageUtil, UsuarioRepository usuarioRepository) {
+        this.messageUtil = messageUtil;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
     public void validar(String email) {

@@ -1,7 +1,6 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.config;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.security.SecurityFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -25,8 +24,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableJpaAuditing
 public class SecurityConfig {
 
-    @Autowired
-    private SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
+
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

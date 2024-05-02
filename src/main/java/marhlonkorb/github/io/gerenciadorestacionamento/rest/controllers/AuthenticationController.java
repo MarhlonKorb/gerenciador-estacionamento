@@ -32,7 +32,6 @@ public class AuthenticationController {
     private final CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase;
     private final IUsuarioValidador iUsuarioValidador;
     private final UsuarioService usuarioService;
-    private final IEmailValidador iEmailValidador;
 
     /**
      * Construtor da classe, injetando as dependências necessárias.
@@ -41,13 +40,12 @@ public class AuthenticationController {
      * @param tokenService          Serviço para geração e validação de tokens JWT.
      * @param iUsuarioValidador     Validador de usuário para garantir consistência nos dados.
      */
-    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService, IEmailValidador iEmailValidador) {
+    public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.criaUsuarioProprietarioUseCase = criaUsuarioProprietarioUseCase;
         this.iUsuarioValidador = iUsuarioValidador;
         this.usuarioService = usuarioService;
-        this.iEmailValidador = iEmailValidador;
     }
 
     /**

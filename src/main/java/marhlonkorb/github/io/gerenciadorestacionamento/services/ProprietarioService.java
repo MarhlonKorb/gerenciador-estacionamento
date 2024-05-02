@@ -22,7 +22,6 @@ public class ProprietarioService extends AbstractEntityService<Proprietario, Lon
     private final ProprietarioMapper proprietarioMapper;
     private final ProprietarioRepository proprietarioRepository;
     private final IEmailValidador iEmailValidador;
-
     private final MessageUtil messageUtil;
 
     public ProprietarioService(ProprietarioMapper proprietarioMapper, ProprietarioRepository proprietarioRepository, IEmailValidador iEmailValidador, MessageUtil messageUtil) {

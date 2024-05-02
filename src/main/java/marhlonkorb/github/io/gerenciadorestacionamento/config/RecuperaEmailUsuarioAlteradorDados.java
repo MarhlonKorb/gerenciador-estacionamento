@@ -11,7 +11,7 @@ import java.util.Optional;
  * Classe responsável por recuperar o email do usuário que está persisntindo entidade auditada atual
  */
 @Component
-public class RecuperaUsuarioAlteradorDados implements AuditorAware<String> {
+public class RecuperaEmailUsuarioAlteradorDados implements AuditorAware<String> {
 
     /**
      * Recupera o email do usuário que está alterando os dados de determinada entidade auditada
@@ -21,9 +21,6 @@ public class RecuperaUsuarioAlteradorDados implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
-        }
-        return Optional.of(authentication.getName());
+        return Optional.ofNullable(authentication.getName());
     }
 }

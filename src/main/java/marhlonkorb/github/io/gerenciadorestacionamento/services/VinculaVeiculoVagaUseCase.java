@@ -2,18 +2,21 @@ package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VinculaVeiculoVagaUseCase {
 
-    @Autowired
-    private VagaService vagaService;
 
-    @Autowired
-    private VeiculoService veiculoService;
+    private final VagaService vagaService;
+
+    private final VeiculoService veiculoService;
+
+    public VinculaVeiculoVagaUseCase(VagaService vagaService, VeiculoService veiculoService) {
+        this.vagaService = vagaService;
+        this.veiculoService = veiculoService;
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public void execute(Long idVeiculo, Long idVaga) {
