@@ -67,7 +67,7 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
      *
      * @param veiculo
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public void updateVeiculoPrincipal(VeiculoInputMapper veiculo) {
         if (veiculo.isPrincipal()) {
             var veiculoEncontrado = veiculoRepository.findById(veiculo.getId()).get();
@@ -79,15 +79,6 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
         veiculoRepository.updateVeiculoPrincipalFalse(veiculo.getIdProprietario());
         // Altera para true o veículo principal atual do proprietário
         veiculoRepository.updateVeiculoPrincipalTrue(veiculo.getId(), veiculo.getIdProprietario());
-    }
-
-    /**
-     * Atualiza status do veículo
-     */
-    private void atualizaStatusVeiculo(VeiculoInputMapper veiculo) {
-        final Veiculo veiculoEncontrado = findById(veiculo.getId());
-        veiculoEncontrado.setPrincipal(!veiculo.isPrincipal());
-        veiculoRepository.save(veiculoEncontrado);
     }
 
     /**
@@ -108,6 +99,7 @@ public class VeiculoService extends AbstractEntityService<Veiculo, Long, Veiculo
         return veiculoRepository.save(veiculo);
     }
 
+    @Transactional(rollbackOn = Exception.class)
     public Set<Veiculo> saveAll(Set<Veiculo> veiculo) {
         return new HashSet<>(veiculoRepository.saveAll(veiculo));
     }

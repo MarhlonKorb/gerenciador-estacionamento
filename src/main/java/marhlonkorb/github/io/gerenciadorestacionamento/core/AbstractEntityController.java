@@ -20,7 +20,6 @@ public abstract class AbstractEntityController<T, ID, Input, DtoType> {
 
 
     @GetMapping("/{id}")
-    @Transactional(rollbackFor = Exception.class)
     public DtoType getById(@PathVariable ID id) {
         return service.getById(id);
     }
@@ -31,16 +30,19 @@ public abstract class AbstractEntityController<T, ID, Input, DtoType> {
     }
 
     @PostMapping
+    @Transactional(rollbackFor = Exception.class)
     public DtoType create(@RequestBody Input input) {
         return service.create(input);
     }
 
     @PutMapping("/{id}")
+    @Transactional(rollbackFor = Exception.class)
     public DtoType update(@PathVariable ID id, @RequestBody Input input) {
         return service.update(id, input);
     }
 
     @DeleteMapping("/{id}")
+    @Transactional(rollbackFor = Exception.class)
     public void delete(@PathVariable ID id) {
         service.delete(id);
     }

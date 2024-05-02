@@ -9,7 +9,11 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprieta
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioDbConstantes;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.exceptions.ProprietarioNotFoundException;
+import marhlonkorb.github.io.gerenciadorestacionamento.rest.exception.ApiErrors;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.ProprietarioService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +33,11 @@ public class ProprietarioController extends AbstractEntityController<Proprietari
     }
 
     @GetMapping("/getProprietarioPeloIdUsuario={id}")
-    public ProprietarioOutputMapper getIdProprietarioPeloIdUsuario(@PathVariable Long id) {
-        return proprietarioService.getProprietarioByIdUsuario(id);
+    public ResponseEntity<ProprietarioOutputMapper> getIdProprietarioPeloIdUsuario(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(proprietarioService.getProprietarioByIdUsuario(id));
+        } catch (ProprietarioNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

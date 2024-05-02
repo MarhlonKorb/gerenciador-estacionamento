@@ -4,7 +4,6 @@ package marhlonkorb.github.io.gerenciadorestacionamento.models.entities.propriet
  * Input da entidade Proprietario
  */
 public class ProprietarioInputMapper {
-
     private Long id;
     private Long idUsuario;
     private String nome;

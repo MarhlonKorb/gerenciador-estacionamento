@@ -11,7 +11,6 @@ import java.util.Set;
  * Output da entidade Proprietario teste jenkins
  */
 public class ProprietarioOutputMapper {
-
     private Long id;
     private Long idUsuario;
     private String nome;

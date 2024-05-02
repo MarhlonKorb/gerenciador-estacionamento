@@ -1,6 +1,5 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.email.IEmailValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.usuario.IUsuarioValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.AuthenticationDTO;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.LoginResponseDTO;
@@ -15,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,14 +56,18 @@ public class AuthenticationController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationDTO data) {
-        // Valida se o usuário existe antes da autenticação
-        iUsuarioValidador.validaUsuarioIsNotCadastrado(data.email());
-        // Cria um token de autenticação para o usuário
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
-        // Gera o token JWT para o usuário autenticado
-        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        try {
+            // Valida se o usuário existe antes da autenticação
+            iUsuarioValidador.validaUsuarioIsNotCadastrado(data.email());
+            // Cria um token de autenticação para o usuário
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            var auth = authenticationManager.authenticate(usernamePassword);
+            // Gera o token JWT para o usuário autenticado
+            var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+            return ResponseEntity.accepted().body(new LoginResponseDTO(token));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, e.getMessage()));
+        }
     }
 
     /**
@@ -80,7 +84,7 @@ public class AuthenticationController {
             Usuario usuarioCriado = usuarioService.findByEmail(data.email());
             // Gera um token JWT para o novo usuário registrado
             String token = tokenService.generateToken(usuarioCriado);
-            return ResponseEntity.ok(new LoginResponseDTO(token));
+            return ResponseEntity.ok().body(new LoginResponseDTO(token));
         } catch (UsuarioException ex) {
             return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, ex.getMessage()));
         }

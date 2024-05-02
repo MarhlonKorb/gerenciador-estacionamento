@@ -1,7 +1,6 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 
 /**

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ProprietarioMapper extends AbstractEntityMapper<Proprietario, ProprietarioInputMapper, ProprietarioOutputMapper> {
-
     @Override
     public ProprietarioOutputMapper convertToDto(Proprietario input) {
          return getModelMapper().map(input, ProprietarioOutputMapper.class);

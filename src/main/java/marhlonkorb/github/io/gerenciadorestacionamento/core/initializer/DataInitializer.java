@@ -4,6 +4,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.Status;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.StatusVaga;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VagaRepository;
+import marhlonkorb.github.io.gerenciadorestacionamento.services.VagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

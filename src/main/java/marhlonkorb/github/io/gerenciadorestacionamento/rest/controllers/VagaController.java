@@ -8,8 +8,14 @@ import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityContro
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.VagaInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.VagaOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.rest.exception.ApiErrors;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.VinculaVeiculoVagaUseCase;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Classe responsável por controlar o registro de veiculos no estacionamento
@@ -25,8 +31,13 @@ public class VagaController extends AbstractEntityController<Vaga, Long, VagaInp
     }
 
     @PutMapping("/vinculaVeiculoVaga/idVeiculo={idVeiculo}&idVaga={idVaga}")
-    public void executaVinculoVeiculoVaga(@PathVariable Long idVeiculo, @PathVariable Long idVaga) {
-        vinculaVeiculoVagaUseCase.execute(idVeiculo, idVaga);
+    public ResponseEntity<?> executaVinculoVeiculoVaga(@PathVariable Long idVeiculo, @PathVariable Long idVaga) throws Exception {
+        try {
+            vinculaVeiculoVagaUseCase.execute(idVeiculo, idVaga);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, e.getMessage()));
+        }
+        return ResponseEntity.ok().build();
     }
 
 }

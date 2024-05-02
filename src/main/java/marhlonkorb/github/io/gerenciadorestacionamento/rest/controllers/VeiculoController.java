@@ -9,6 +9,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.V
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoInputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoOutputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.VeiculoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -27,16 +28,21 @@ public class VeiculoController extends AbstractEntityController<Veiculo, Long, V
     }
 
     @GetMapping("/findAllByIdProprietario/{idProprietario}")
-    public Set<VeiculoOutputMapper> findAllByIdProprietario(@PathVariable Long idProprietario){
+    public Set<VeiculoOutputMapper> findAllByIdProprietario(@PathVariable Long idProprietario) {
         return veiculoService.findAllByIdProprietario(idProprietario);
     }
+
     @GetMapping("/findVeiculoPrincipal/{idProprietario}")
-    public Optional<VeiculoOutputMapper> findVeiculoPrincipal(@PathVariable Long idProprietario){
-        return veiculoService.findVeiculoPrincipal(idProprietario);
+    public ResponseEntity<Optional<VeiculoOutputMapper>> findVeiculoPrincipal(@PathVariable Long idProprietario) {
+        try {
+            return ResponseEntity.ok(veiculoService.findVeiculoPrincipal(idProprietario));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/selecionaComoPrincipal")
-    public void selecionaComoPrincipal(@RequestBody VeiculoInputMapper veiculo){
+    public void selecionaComoPrincipal(@RequestBody VeiculoInputMapper veiculo) {
         veiculoService.updateVeiculoPrincipal(veiculo);
     }
 
