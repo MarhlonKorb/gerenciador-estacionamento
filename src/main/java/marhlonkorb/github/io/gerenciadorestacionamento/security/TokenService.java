@@ -81,6 +81,6 @@ public class TokenService {
      */
     private Instant getExpirationDate() {
         // Retorna a data e hora atual mais 2 horas, convertido para Instant
-        return LocalDateTime.now().plusMinutes(1).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusMinutes(30).toInstant(ZoneOffset.of("-03:00"));
     }
 }
