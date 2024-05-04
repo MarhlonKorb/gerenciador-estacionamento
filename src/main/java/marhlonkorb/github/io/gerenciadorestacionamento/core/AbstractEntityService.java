@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractEntityService<EntidadeComId, ID, Input, DtoType> {
 
     @Autowired
-    private JpaRepository<EntidadeComId, ID> repository;
+    protected JpaRepository<EntidadeComId, ID> repository;
 
     @Autowired
     private AbstractEntityMapper<EntidadeComId, Input, DtoType> abstractEntityMapper;
