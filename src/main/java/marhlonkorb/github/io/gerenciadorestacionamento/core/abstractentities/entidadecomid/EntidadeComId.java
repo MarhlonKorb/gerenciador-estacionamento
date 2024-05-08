@@ -1,6 +1,7 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid;
 
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,7 @@ public abstract class EntidadeComId implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable = false, updatable = false)
     private Long id;
 
     public Long getId() {
