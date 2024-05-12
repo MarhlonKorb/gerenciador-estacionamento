@@ -1,15 +1,13 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
 import jakarta.validation.ConstraintViolationException;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.Proprietario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoInputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.exceptions.VeiculoNotFoundException;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.Proprietario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.exceptions.VeiculoNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 

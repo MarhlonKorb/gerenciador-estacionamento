@@ -5,14 +5,12 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityController;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.Proprietario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioDbConstantes;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioInputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioOutputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.exceptions.ProprietarioNotFoundException;
-import marhlonkorb.github.io.gerenciadorestacionamento.rest.exception.ApiErrors;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.Proprietario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.ProprietarioDbConstantes;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.ProprietarioInputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.ProprietarioOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.exceptions.ProprietarioNotFoundException;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.ProprietarioService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,6 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.Vaga;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VagaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

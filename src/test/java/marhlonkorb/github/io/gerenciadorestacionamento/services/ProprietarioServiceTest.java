@@ -1,26 +1,17 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
 import jakarta.transaction.Transactional;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.Proprietario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.ProprietarioMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.proprietario.exceptions.ProprietarioNotFoundException;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
-import marhlonkorb.github.io.gerenciadorestacionamento.repositories.ProprietarioRepository;
-import org.junit.jupiter.api.BeforeEach;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.Proprietario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.exceptions.ProprietarioNotFoundException;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.Usuario;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 class ProprietarioServiceTest {
