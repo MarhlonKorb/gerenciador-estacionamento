@@ -1,7 +1,7 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.Vaga;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

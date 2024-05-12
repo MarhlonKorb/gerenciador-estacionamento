@@ -2,7 +2,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.rest.exception;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import jakarta.persistence.EntityNotFoundException;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.exceptions.UsuarioException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;

@@ -5,9 +5,9 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityService;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.VagaInputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.VagaOutputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.VagaInputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.VagaOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.Vaga;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.VagaRepository;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;

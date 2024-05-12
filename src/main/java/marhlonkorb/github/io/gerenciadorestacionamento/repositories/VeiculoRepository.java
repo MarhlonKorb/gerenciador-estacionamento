@@ -1,6 +1,6 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.repositories;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -5,9 +5,9 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityController;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.Usuario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.UsuarioInputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.UsuarioOutputMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

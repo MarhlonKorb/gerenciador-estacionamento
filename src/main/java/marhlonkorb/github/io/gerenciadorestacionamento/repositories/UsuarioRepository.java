@@ -1,6 +1,6 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.repositories;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;

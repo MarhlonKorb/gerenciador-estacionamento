@@ -1,6 +1,6 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.repositories;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.Vaga;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 /**

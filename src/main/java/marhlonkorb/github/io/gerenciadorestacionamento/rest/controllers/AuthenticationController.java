@@ -1,11 +1,11 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.usuario.IUsuarioValidador;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.AuthenticationDTO;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.LoginResponseDTO;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputCadastro;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.AuthenticationDTO;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.AuthenticationResponseDTO;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.Usuario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.UsuarioInputCadastro;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.exceptions.UsuarioException;
 import marhlonkorb.github.io.gerenciadorestacionamento.rest.exception.ApiErrors;
 import marhlonkorb.github.io.gerenciadorestacionamento.security.TokenService;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.CriaUsuarioProprietarioUseCase;
@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +63,7 @@ public class AuthenticationController {
             var auth = authenticationManager.authenticate(usernamePassword);
             // Gera o token JWT para o usuário autenticado
             var token = tokenService.generateToken((Usuario) auth.getPrincipal());
-            return ResponseEntity.accepted().body(new LoginResponseDTO(token));
+            return ResponseEntity.accepted().body(new AuthenticationResponseDTO(token));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
@@ -84,7 +83,7 @@ public class AuthenticationController {
             Usuario usuarioCriado = usuarioService.findByEmail(data.email());
             // Gera um token JWT para o novo usuário registrado
             String token = tokenService.generateToken(usuarioCriado);
-            return ResponseEntity.ok().body(new LoginResponseDTO(token));
+            return ResponseEntity.ok().body(new AuthenticationResponseDTO(token));
         } catch (UsuarioException ex) {
             return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, ex.getMessage()));
         }

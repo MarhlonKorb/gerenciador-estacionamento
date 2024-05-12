@@ -2,8 +2,8 @@ package marhlonkorb.github.io.gerenciadorestacionamento.validador.usuario;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.utils.MessageUtil;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.usuario.IUsuarioValidador;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.Usuario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.exceptions.UsuarioException;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.email.IEmailValidador;
 import org.springframework.stereotype.Component;
 

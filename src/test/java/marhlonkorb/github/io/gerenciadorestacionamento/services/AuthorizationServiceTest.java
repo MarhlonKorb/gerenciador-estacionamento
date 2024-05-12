@@ -1,16 +1,8 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.builder.UsuarioBuilder;
-import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
-import org.junit.Assert;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.builder.UsuarioBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;

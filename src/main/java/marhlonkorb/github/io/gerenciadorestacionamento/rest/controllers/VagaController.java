@@ -5,9 +5,9 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityController;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.Vaga;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.VagaInputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.vaga.VagaOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.Vaga;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.VagaInputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.VagaOutputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.rest.exception.ApiErrors;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.VinculaVeiculoVagaUseCase;
 import org.springframework.http.HttpStatus;

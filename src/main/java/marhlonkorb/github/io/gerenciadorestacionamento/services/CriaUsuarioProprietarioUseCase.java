@@ -1,7 +1,7 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.UsuarioInputCadastro;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.builder.UsuarioBuilder;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.UsuarioInputCadastro;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.builder.UsuarioBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

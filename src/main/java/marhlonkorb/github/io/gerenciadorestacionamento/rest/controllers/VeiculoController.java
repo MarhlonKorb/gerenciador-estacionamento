@@ -5,9 +5,9 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityController;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.Veiculo;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoInputMapper;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.veiculo.VeiculoOutputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.VeiculoInputMapper;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.VeiculoOutputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.VeiculoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

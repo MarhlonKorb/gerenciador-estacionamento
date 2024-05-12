@@ -1,7 +1,7 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core.validador.usuario;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.Usuario;
-import marhlonkorb.github.io.gerenciadorestacionamento.models.entities.usuario.exceptions.UsuarioException;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.Usuario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.exceptions.UsuarioException;
 
 /**
  * Interface que define contrato para as validações de usuário
