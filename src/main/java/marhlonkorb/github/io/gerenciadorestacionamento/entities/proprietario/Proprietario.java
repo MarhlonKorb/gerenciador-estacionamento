@@ -13,6 +13,7 @@ import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.Usuario;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -43,8 +44,8 @@ public class Proprietario extends EntidadeComId {
     private String apartamento;
 
     @Column(name = ProprietarioDbConstantes.DATA_NASCIMENTO)
-    @JsonFormat(pattern = ProprietarioDbConstantes.DATA_NASCIMENTO_PATTERN)
-    private String dataNascimento;
+    @Temporal(TemporalType.DATE)
+    private Date dataNascimento;
 
     @Column
     private String telefone;
@@ -85,11 +86,11 @@ public class Proprietario extends EntidadeComId {
         this.apartamento = apartamento;
     }
 
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
