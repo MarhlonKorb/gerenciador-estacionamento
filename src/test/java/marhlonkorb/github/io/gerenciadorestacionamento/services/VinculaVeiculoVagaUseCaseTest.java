@@ -1,10 +1,9 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.services;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.StatusVaga;
-import marhlonkorb.github.io.gerenciadorestacionamento.core.initializer.DataInitializer;
-import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
-import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.exceptions.VeiculoNotFoundException;
 import org.junit.Before;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.StatusVaga;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.exceptions.VeiculoNotFoundException;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -29,7 +30,6 @@ class VinculaVeiculoVagaUseCaseTest {
 
     @Before
     public void setUp() throws Exception {
-        new DataInitializer();
     }
 
     @Test

@@ -1,15 +1,19 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadeauditada;
 
-import jakarta.persistence.*;
-import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid.EntidadeComId;
+import java.util.Date;
+
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import java.util.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid.EntidadeComId;
 
 /**
  * Classe abstrata que representa uma entidade auditada
@@ -21,6 +25,7 @@ public abstract class EntidadeAuditada extends EntidadeComId {
     @Column
     @CreatedBy
     protected String criadoPor;
+
     @Column
     @LastModifiedBy
     private String alteradoPor;
