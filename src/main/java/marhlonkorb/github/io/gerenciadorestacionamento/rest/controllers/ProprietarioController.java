@@ -1,8 +1,11 @@
-/*
- * gerenciador-estacionamento
- * CopyRight Rech Informática Ltda. Todos os direitos reservados.
- */
+
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityController;
 import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.Proprietario;
@@ -11,11 +14,6 @@ import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.Pro
 import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.ProprietarioOutputMapper;
 import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.exceptions.ProprietarioNotFoundException;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.ProprietarioService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controla as requisições da entidade Proprietario

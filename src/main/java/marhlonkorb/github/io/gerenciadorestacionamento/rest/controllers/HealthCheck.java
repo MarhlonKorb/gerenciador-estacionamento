@@ -4,10 +4,6 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
-import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.HealthIndicator;
-import org.springframework.stereotype.Component;
-
 /**
  * Componente responsável por fornecer informações sobre a saúde da aplicação.
  * Implementa a interface HealthIndicator do Spring Boot.
@@ -37,9 +33,11 @@ public class HealthCheck implements HealthIndicator {
     }
 
     /**
-     * Método de espaço reservado para implementar lógica personalizada de verificação de saúde.
+     * Método de espaço reservado para implementar lógica personalizada de
+     * verificação de saúde.
      *
-     * @return Um inteiro representando o resultado da verificação de saúde (0 para sucesso, diferente de zero para falha).
+     * @return Um inteiro representando o resultado da verificação de saúde (0
+     * para sucesso, diferente de zero para falha).
      */
     public int check() {
         // Implementa a lógica personalizada para verificar a saúde da aplicação

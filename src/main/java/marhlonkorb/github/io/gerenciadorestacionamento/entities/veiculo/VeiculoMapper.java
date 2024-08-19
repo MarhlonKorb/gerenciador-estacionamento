@@ -1,10 +1,11 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityMapper;
+import java.util.Set;
+
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.AbstractEntityMapper;
 
 /**
  * Mapper da entidade Veículo
@@ -22,7 +23,7 @@ public class VeiculoMapper extends AbstractEntityMapper<Veiculo, VeiculoInputMap
         return getModelMapper().map(input, Veiculo.class);
     }
 
-    public Set<VeiculoOutputMapper> convertToSetDto(Set<Veiculo> veiculosProprietario){
+    public Set<VeiculoOutputMapper> convertToSetDto(Set<Veiculo> veiculosProprietario) {
         return getModelMapper().map(veiculosProprietario, new TypeToken<Set<VeiculoOutputMapper>>() {
         }.getType());
     }

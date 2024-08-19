@@ -1,15 +1,15 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.config;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import java.util.Optional;
 
 /**
- * Classe responsável por recuperar o email do usuário que está persisntindo entidade auditada atual
+ * Classe responsável por recuperar o email do usuário que está persistindo a entidade auditada atual
  */
 @Component
 public class RecuperaEmailUsuarioAlteradorDados implements AuditorAware<String> {
@@ -26,8 +26,7 @@ public class RecuperaEmailUsuarioAlteradorDados implements AuditorAware<String> 
             return Optional.empty();
         }
         // Verifica se o usuário autenticado é do tipo UserDetails (ou uma subclasse)
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
             return Optional.of(userDetails.getUsername());
         } else {
             // Caso não seja do tipo UserDetails, você pode adaptar para suas necessidades,

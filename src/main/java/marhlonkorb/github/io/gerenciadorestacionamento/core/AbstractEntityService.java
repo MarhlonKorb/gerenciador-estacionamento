@@ -1,16 +1,16 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
-import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid.EntidadeComId;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public abstract class AbstractEntityService<EntidadeComId, ID, Input, DtoType> {
@@ -62,6 +62,5 @@ public abstract class AbstractEntityService<EntidadeComId, ID, Input, DtoType> {
         }
         repository.deleteById(id);
     }
-
 
 }

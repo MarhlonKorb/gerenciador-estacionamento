@@ -4,6 +4,7 @@ package marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario;
  * Input da entidade Usuario
  */
 public class UsuarioInputMapper {
+
     private Long id;
     private String email;
     private String password;

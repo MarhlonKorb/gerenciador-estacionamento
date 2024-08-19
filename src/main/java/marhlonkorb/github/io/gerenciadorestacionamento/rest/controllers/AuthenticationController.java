@@ -1,5 +1,15 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.rest.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.usuario.IUsuarioValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.AuthenticationDTO;
 import marhlonkorb.github.io.gerenciadorestacionamento.entities.usuario.AuthenticationResponseDTO;
@@ -10,14 +20,6 @@ import marhlonkorb.github.io.gerenciadorestacionamento.rest.exception.ApiErrors;
 import marhlonkorb.github.io.gerenciadorestacionamento.security.TokenService;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.CriaUsuarioProprietarioUseCase;
 import marhlonkorb.github.io.gerenciadorestacionamento.services.UsuarioService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controlador responsável pela autenticação do usuário.
@@ -35,9 +37,11 @@ public class AuthenticationController {
     /**
      * Construtor da classe, injetando as dependências necessárias.
      *
-     * @param authenticationManager Gerenciador de autenticação do Spring Security.
-     * @param tokenService          Serviço para geração e validação de tokens JWT.
-     * @param iUsuarioValidador     Validador de usuário para garantir consistência nos dados.
+     * @param authenticationManager Gerenciador de autenticação do Spring
+     * Security.
+     * @param tokenService Serviço para geração e validação de tokens JWT.
+     * @param iUsuarioValidador Validador de usuário para garantir consistência
+     * nos dados.
      */
     public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService, CriaUsuarioProprietarioUseCase criaUsuarioProprietarioUseCase, IUsuarioValidador iUsuarioValidador, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
@@ -50,7 +54,8 @@ public class AuthenticationController {
     /**
      * Endpoint para autenticar um usuário e gerar um token JWT.
      *
-     * @param data Dados de autenticação fornecidos pelo usuário (email e senha).
+     * @param data Dados de autenticação fornecidos pelo usuário (email e
+     * senha).
      * @return Resposta contendo o token JWT se a autenticação for bem-sucedida.
      */
     @PostMapping("/login")
@@ -64,13 +69,13 @@ public class AuthenticationController {
             // Gera o token JWT para o usuário autenticado
             var token = tokenService.generateToken((Usuario) auth.getPrincipal());
             return ResponseEntity.accepted().body(new AuthenticationResponseDTO(token));
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().body(new ApiErrors(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
     }
 
     /**
-     * Endpoint para registrar um novo usuário e gerar um token JWT para o mesmo.
+     * Endpoint para registrar um novo usuário e gerar um token JWT de retorno.
      *
      * @param data Dados do novo usuário a ser registrado.
      * @return Resposta contendo o token JWT gerado para o novo usuário.

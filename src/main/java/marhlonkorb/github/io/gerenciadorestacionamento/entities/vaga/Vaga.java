@@ -1,10 +1,17 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.StatusVaga;
-import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.Status;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadeauditada.EntidadeAuditada;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.Status;
 import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
 
 /**
@@ -21,6 +28,7 @@ public class Vaga extends EntidadeAuditada {
     @Column
     @Enumerated(EnumType.STRING)
     private Status status;
+
     @Column(name = "status_vaga")
     @Enumerated(EnumType.STRING)
     private StatusVaga statusVaga;
@@ -52,12 +60,12 @@ public class Vaga extends EntidadeAuditada {
         this.statusVaga = statusVaga;
     }
 
-    public boolean isContemVeiculo(){
+    public boolean isContemVeiculo() {
         return this.getVeiculo() != null || this.statusVaga.equals(StatusVaga.O);
     }
 
-    public void adicionarVeiculo(Veiculo veiculo){
-            this.veiculo = veiculo;
-            this.statusVaga = StatusVaga.O;
+    public void adicionarVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+        this.statusVaga = StatusVaga.O;
     }
 }

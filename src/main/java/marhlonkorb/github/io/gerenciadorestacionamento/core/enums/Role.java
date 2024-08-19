@@ -5,9 +5,9 @@ public enum Role {
     // UM = Usuario Comum
     ADMIN("Admin"), USER("Usuário comum");
 
-    private String value;
+    private final String value;
 
-    Role(String value){
+    Role(String value) {
         this.value = value;
     }
 

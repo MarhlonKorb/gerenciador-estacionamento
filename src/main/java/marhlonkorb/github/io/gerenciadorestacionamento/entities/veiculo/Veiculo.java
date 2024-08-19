@@ -1,20 +1,29 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid.EntidadeComId;
-import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.StatusVaga;
-import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.Proprietario;
-import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.Vaga;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import marhlonkorb.github.io.gerenciadorestacionamento.core.abstractentities.entidadecomid.EntidadeComId;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.proprietario.Proprietario;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.StatusVaga;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga.Vaga;
 
 /**
  * Entidade Veiculo
  */
 @Entity(name = VeiculoDbConstantes.TABLE_NAME)
 public class Veiculo extends EntidadeComId {
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = VeiculoDbConstantes.PROPRIETARIO_ID)

@@ -1,15 +1,22 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.core;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public abstract class AbstractEntityController<T, ID, Input, DtoType> {
+
     @Autowired
     protected AbstractEntityService<T, ID, Input, DtoType> service;
 
@@ -17,7 +24,6 @@ public abstract class AbstractEntityController<T, ID, Input, DtoType> {
     public List<Object> getAll() {
         return service.getAll();
     }
-
 
     @GetMapping("/{id}")
     public DtoType getById(@PathVariable ID id) {

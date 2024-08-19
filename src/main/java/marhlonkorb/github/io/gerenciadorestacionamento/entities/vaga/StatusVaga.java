@@ -1,4 +1,4 @@
-package marhlonkorb.github.io.gerenciadorestacionamento.core.enums;
+package marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga;
 
 public enum StatusVaga {
     L("Livre"), O("Ocupada");

@@ -1,6 +1,5 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.entities.vaga;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.StatusVaga;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.enums.Status;
 
 /**
@@ -15,6 +14,7 @@ public class VagaOutputMapper {
     private Status status;
 
     private StatusVaga statusVaga;
+
     public Long getId() {
         return id;
     }

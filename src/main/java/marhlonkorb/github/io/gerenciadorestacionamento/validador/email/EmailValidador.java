@@ -1,14 +1,14 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.validador.email;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.springframework.stereotype.Component;
+
 import marhlonkorb.github.io.gerenciadorestacionamento.core.utils.MessageUtil;
 import marhlonkorb.github.io.gerenciadorestacionamento.core.validador.email.IEmailValidador;
 import marhlonkorb.github.io.gerenciadorestacionamento.repositories.UsuarioRepository;
 import marhlonkorb.github.io.gerenciadorestacionamento.validador.email.exception.FormatoEmailInvalidoException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Classe que executa a validação de email
@@ -49,10 +49,7 @@ public class EmailValidador implements IEmailValidador {
     @Override
     public boolean isEmailCadastrado(String email) {
         final var usuarioEncontrado = usuarioRepository.findUsuarioByEmail(email);
-        if (usuarioEncontrado.isPresent()) {
-            return true;
-        }
-        return false;
+        return usuarioEncontrado.isPresent();
     }
 
 }

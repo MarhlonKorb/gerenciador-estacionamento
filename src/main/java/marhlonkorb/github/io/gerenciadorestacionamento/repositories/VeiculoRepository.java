@@ -1,20 +1,22 @@
 package marhlonkorb.github.io.gerenciadorestacionamento.repositories;
 
-import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-import java.util.Set;
+import marhlonkorb.github.io.gerenciadorestacionamento.entities.veiculo.Veiculo;
 
 /**
  * Repository da entidade Veiculo
  */
 @Repository
 public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
+
     /**
      * Busca todos os veículos de acordo com o idProprietario
      *
@@ -25,6 +27,7 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
 
     /**
      * Desmarca o veículo principal atual
+     *
      * @param idProprietario
      */
     @Modifying
@@ -34,7 +37,6 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
     @Modifying
     @Query("UPDATE veiculo v SET v.principal = true WHERE v.id = :idVeiculo AND v.proprietario.id = :idProprietario")
     void updateVeiculoPrincipalTrue(@Param("idVeiculo") Long idVeiculo, @Param("idProprietario") Long idProprietario);
-
 
     Optional<Veiculo> findByProprietarioIdAndPrincipal(Long idProprietario, boolean principal);
 }
